@@ -1,0 +1,11 @@
+species="hg19"
+samplelist=(\
+/mnt/datab/DLVR2Chapkin/subsamples/dge-complete-shield/11993508.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/dge-complete-shield/15992674.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/dge-complete-shield/2000564.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/dge-complete-shield/24995915.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/dge-complete-shield/34999104.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/dge-complete-shield/3997895.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/dge-complete-shield/50001322.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/dge-complete-shield/7994354.fastq \
+)

@@ -1,0 +1,5 @@
+species="hg19"
+samplelist=(\
+/mnt/data1/lampe-test-2/RNA_Later_TruSeqRNA_12___CTTGTA_R1.fastq.gz \
+/mnt/data1/lampe-test-2/Denat_TruSeqRNA_6___GCCAAT_R1.fastq.gz \
+)

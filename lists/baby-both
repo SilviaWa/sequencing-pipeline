@@ -1,0 +1,7 @@
+species="hg19"
+samplelist=(\
+/mnt/datab/baby-both/R_2012_04_12_14_12_23_user_preemie-IL_Auto_preemie-IL_11.fastq \
+/mnt/datab/baby-both/R_2012_04_12_20_06_36_user_3mo-fecal_Auto_3mo-fecal_12.fastq \
+/mnt/datab/baby-both/s_6_sequence.txt \
+/mnt/datab/baby-both/s_7_sequence.txt \
+)

@@ -1,0 +1,10 @@
+species="mm10"
+samplelist=(\
+/mnt/datab/DLVR2Chapkin/Sample_26_NuGen_15_GGAC_R1.fastq \
+/mnt/datab/DLVR2Chapkin/Sample_27_NuGen_16_TCGA_R1.fastq \
+/mnt/datab/DLVR2Chapkin/Sample_28_NuGen_5_AGGG_R1.fastq \
+/mnt/datab/manasvi-stem-010113/255neg100ng_RNA_GATCAG_R1.fastq \
+/mnt/datab/manasvi-stem-010113/255neg10ng_RNA_CTTGTA_R1.fastq \
+/mnt/datab/manasvi-stem-010113/255neg20ng_RNA_GGCTAC_R1.fastq \
+)
+

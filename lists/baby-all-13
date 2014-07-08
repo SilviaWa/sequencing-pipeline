@@ -1,0 +1,12 @@
+species="hg19"
+samplelist=(\
+/mnt/datab/baby-stool-individual-cat/192_1.fastq \
+/mnt/datab/baby-stool-individual-cat/192_2.fastq \
+/mnt/datab/baby-stool-individual-cat/196_2.fastq \
+/mnt/datab/baby-stool-individual-cat/204_2.fastq \
+/mnt/datab/baby-stool-individual-cat/BF10c.fastq \
+/mnt/datab/baby-stool-individual-cat/BF1cD.fastq \
+/mnt/datab/baby-stool-individual-cat/FF12c.fastq \
+/mnt/datab/baby-pooled/s_7_sequence.fastq \
+/mnt/datab/baby-pooled/s_8_sequence.fastq \
+)

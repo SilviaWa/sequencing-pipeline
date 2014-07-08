@@ -1,0 +1,7 @@
+species="hg19"
+samplelist=(\
+/mnt/datab/DLVR2Chapkin/subsamples/Sample_26_NuGen_15_GGAC_R1/1999126.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/Sample_26_NuGen_15_GGAC_R1/4000117.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/Sample_26_NuGen_15_GGAC_R1/5999245.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/Sample_26_NuGen_15_GGAC_R1/7474805.fastq \
+)

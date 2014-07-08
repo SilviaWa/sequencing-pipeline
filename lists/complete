@@ -1,0 +1,10 @@
+species="hg19"
+samplelist=(\
+/mnt/datab/DLVR2Chapkin/subsamples/complete/11994124.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/complete/15995551.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/complete/2000891.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/complete/24997997.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/complete/35000823.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/complete/4000632.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/complete/7998773.fastq \
+)

@@ -1,0 +1,15 @@
+species="hg19"
+samplelist=(\
+/mnt/data1/Baby-microbiome-shotgun-454/zz03_A_RL1.fastq.bz2 \
+/mnt/data1/Baby-microbiome-shotgun-454/zz03_A_RL2.fastq.bz2 \
+/mnt/data1/Baby-microbiome-shotgun-454/zz03_A_RL3.fastq.bz2 \
+/mnt/data1/Baby-microbiome-shotgun-454/zz03_A_RL4.fastq.bz2 \
+/mnt/data1/Baby-microbiome-shotgun-454/zz03_A_RL5.fastq.bz2 \
+/mnt/data1/Baby-microbiome-shotgun-454/zz03_A_RL6.fastq.bz2 \
+/mnt/data1/Baby-microbiome-shotgun-454/zz03_B_RL10.fastq.bz2 \
+/mnt/data1/Baby-microbiome-shotgun-454/zz03_B_RL11.fastq.bz2 \
+/mnt/data1/Baby-microbiome-shotgun-454/zz03_B_RL12.fastq.bz2 \
+/mnt/data1/Baby-microbiome-shotgun-454/zz03_B_RL7.fastq.bz2 \
+/mnt/data1/Baby-microbiome-shotgun-454/zz03_B_RL8.fastq.bz2 \
+/mnt/data1/Baby-microbiome-shotgun-454/zz03_B_RL9.fastq.bz2
+)

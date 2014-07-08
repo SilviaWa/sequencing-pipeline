@@ -1,0 +1,10 @@
+species="hg19"
+samplelist=(\
+/mnt/datab/DLVR2Chapkin/subsamples/255neg20ng_RNA_GGCTAC_R1/19998483.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/255neg20ng_RNA_GGCTAC_R1/2001900.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/255neg20ng_RNA_GGCTAC_R1/40002983.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/255neg20ng_RNA_GGCTAC_R1/4000452.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/255neg20ng_RNA_GGCTAC_R1/59285950.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/255neg20ng_RNA_GGCTAC_R1/6001263.fastq \
+/mnt/datab/DLVR2Chapkin/subsamples/255neg20ng_RNA_GGCTAC_R1/9997287.fastq \
+)

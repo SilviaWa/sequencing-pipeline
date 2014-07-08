@@ -1,0 +1,42 @@
+sampleid,sample_num,Subject,Solution,RNA isolation,Library,ERCC,Barcode,BC sequence
+Sample_01_TruSeq_1_ATCACG_R1,1,JK,RNA Later,regular,TruSeq,+,AR001,ATCACG(A)
+Sample_02_TruSeq_3_TTAGGC_R1,2,JK,RNA Later,regular,TruSeq,-,AR003,TTAGGC(A)
+Sample_03_TruSeq_8_ACTTGA_R1,3,JK,Denaturation,regular,TruSeq,+,AR008,ACTTGA(A)
+Sample_04_TruSeq_9_GATCAG_R1,4,JK,RNA Later,clean,TruSeq,+,AR009,GATCAG(A)
+Sample_05_TruSeq_10_TAGCTT_R1,5,JK,RNA Later,clean,TruSeq,-,AR0010,TAGCTT(A)
+Sample_06_TruSeq_11_GGCTAC_R1,6,JK,Denaturation,clean,TruSeq,+,AR0011,GGCTAC(A)
+Sample_07_TruSeq_20_GTGGCC_R1,7,RZ,RNA Later,regular,TruSeq,+,AR0020,GTGGCC(T)
+Sample_08_TruSeq_21_GTTTCG_R1,8,RZ,RNA Later,regular,TruSeq,+,AR0021,GTTTCG(G)
+Sample_09_TruSeq_22_CGTACG_R1,9,RZ,Denaturation,regular,TruSeq,-,AR0022,CGTACG(T)
+Sample_10_TruSeq_23_GAGTGG_R1,10,RZ,RNA Later,clean,TruSeq,+,AR0023,GAGTGG(A)
+Sample_11_TruSeq_25_ACTGAT_R1,11,RZ,RNA Later,clean,TruSeq,+,AR0025,ACTGAT(A)
+Sample_12_TruSeq_27_ATTCCT_R1,12,RZ,Denaturation,clean,TruSeq,-,AR0027,ATTCCT(T)
+Sample_13_NuGen_1_ACCC_R1,13,JK,Denaturation,clean,DGE,-,BC1,ACCC
+Sample_14_NuGen_9_AAAA_R1,14,JK,Denaturation,regular,Ovation,-,BC9,AAAA
+Sample_15_NuGen_6_CCAT_R1,15,RZ,Denaturation,regular,DGE,-,BC6,CCAT
+Sample_16_NuGen_10_CTGC_R1,16,JK,RNA Later,clean,DGE,-,BC10,CTGC
+Sample_17_NuGen_11_GCTG_R1,17,RZ,RNA Later,clean,Ovation,-,BC11,GCTG
+Sample_18_NuGen_2_CGTA_R1,18,JK,RNA Later,regular,Complete,+,BC2,CGTA
+Sample_19_NuGen_12_TGCT_R1,19,JK,RNA Later,clean,Ovation,-,BC12,TGCT
+Sample_20_NuGen_3_GAGT_R1,20,RZ,RNA Later,clean,Complete,+,BC3,GAGT
+Sample_21_NuGen_4_TTAG_R1,21,JK,RNA Later,clean,Complete,+,BC4,TTAG
+Sample_22_NuGen_13_ATTT_R1,22,RZ,RNA Later,clean,DGE,-,BC13,ATTT
+Sample_23_NuGen_7_GTCA_R1,23,LD,RNA Shield,clean,DGE,-,BC7,GTCA
+Sample_24_NuGen_8_TATC_R1,24,JK,RNA Shield,regular,DGE,-,BC8,TATC
+Sample_25_NuGen_14_CACG_R1,25,JK,RNA Shield,clean,Ovation,-,BC14,CACG
+Sample_29_NuGen_1_ACCC_R1,29,JK,Denaturation,clean,Complete,+,BC1,ACCC
+Sample_30_NuGen_9_AAAA_R1,30,RZ,Denaturation,regular,Ovation,-,BC9,AAAA
+Sample_31_NuGen_10_CTGC_R1,31,RZ,Denaturation,clean,DGE,-,BC10,CTGC
+Sample_32_NuGen_6_CCAT_R1,32,JK,Denaturation,regular,Complete,+,BC6,CCAT
+Sample_33_NuGen_11_GCTG_R1,33,JK,Denaturation,clean,Ovation,-,BC11,GCTG
+Sample_34_NuGen_2_CGTA_R1,34,JK,Denaturation,regular,DGE,-,BC2,CGTA
+Sample_35_NuGen_3_GAGT_R1,35,RZ,Denaturation,clean,Ovation,-,BC3,GAGT
+Sample_36_NuGen_12_TGCT_R1,36,RZ,RNA Later,regular,DGE,-,BC12,TGCT
+Sample_37_NuGen_13_ATTT_R1,37,JK,RNA Later,regular,Ovation,-,BC13,ATTT
+Sample_38_NuGen_4_TTAG_R1,38,JK,RNA Later,regular,DGE,-,BC4,TTAG
+Sample_39_NuGen_14_CACG_R1,39,RZ,RNA Later,regular,Ovation,-,BC14,CACG
+Sample_40_NuGen_7_GTCA_R1,40,RZ,RNA Later,regular,Complete,+,BC7,GTCA
+Sample_41_NuGen_5_AGGG_R1,41,RZ,RNA Shield,regular,DGE,-,BC5,AGGG
+Sample_42_NuGen_15_GGAC_R1,42,JK,RNA Shield,clean,DGE,-,BC15,GGAC
+Sample_43_NuGen_8_TATC_R1,43,JK,RNA Shield,clean,Complete,+,BC8,TATC
+Sample_44_NuGen_16_TCGA_R1,44,LD,RNA Shield,clean,Ovation,-,BC16,TCGA

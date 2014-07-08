@@ -1,0 +1,45 @@
+species="hg19"
+samplelist=(\
+/mnt/datab/DLVR2Chapkin/Sample_01_TruSeq_1_ATCACG_R1.fastq \
+/mnt/datab/DLVR2Chapkin/Sample_02_TruSeq_3_TTAGGC_R1.fastq \
+/mnt/datab/DLVR2Chapkin/Sample_03_TruSeq_8_ACTTGA_R1.fastq \
+/mnt/datab/DLVR2Chapkin/Sample_04_TruSeq_9_GATCAG_R1.fastq \
+/mnt/datab/DLVR2Chapkin/Sample_05_TruSeq_10_TAGCTT_R1.fastq \
+/mnt/datab/DLVR2Chapkin/Sample_06_TruSeq_11_GGCTAC_R1.fastq \
+/mnt/datab/DLVR2Chapkin/Sample_07_TruSeq_20_GTGGCC_R1.fastq \
+/mnt/datab/DLVR2Chapkin/Sample_08_TruSeq_21_GTTTCG_R1.fastq \
+/mnt/datab/DLVR2Chapkin/Sample_09_TruSeq_22_CGTACG_R1.fastq \
+/mnt/datab/DLVR2Chapkin/Sample_10_TruSeq_23_GAGTGG_R1.fastq \
+/mnt/datab/DLVR2Chapkin/Sample_11_TruSeq_25_ACTGAT_R1.fastq \
+/mnt/datab/DLVR2Chapkin/Sample_12_TruSeq_27_ATTCCT_R1.fastq \
+/mnt/datab/DLVR2Chapkin/Sample_13_NuGen_1_ACCC_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_14_NuGen_9_AAAA_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_15_NuGen_6_CCAT_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_16_NuGen_10_CTGC_R1.fastq   \
+/mnt/datab/DLVR2Chapkin/Sample_17_NuGen_11_GCTG_R1.fastq   \
+/mnt/datab/DLVR2Chapkin/Sample_18_NuGen_2_CGTA_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_19_NuGen_12_TGCT_R1.fastq   \
+/mnt/datab/DLVR2Chapkin/Sample_20_NuGen_3_GAGT_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_21_NuGen_4_TTAG_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_22_NuGen_13_ATTT_R1.fastq   \
+/mnt/datab/DLVR2Chapkin/Sample_23_NuGen_7_GTCA_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_24_NuGen_8_TATC_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_25_NuGen_14_CACG_R1.fastq   \
+/mnt/datab/DLVR2Chapkin/Sample_29_NuGen_1_ACCC_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_30_NuGen_9_AAAA_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_31_NuGen_10_CTGC_R1.fastq   \
+/mnt/datab/DLVR2Chapkin/Sample_32_NuGen_6_CCAT_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_33_NuGen_11_GCTG_R1.fastq   \
+/mnt/datab/DLVR2Chapkin/Sample_34_NuGen_2_CGTA_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_35_NuGen_3_GAGT_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_36_NuGen_12_TGCT_R1.fastq   \
+/mnt/datab/DLVR2Chapkin/Sample_37_NuGen_13_ATTT_R1.fastq   \
+/mnt/datab/DLVR2Chapkin/Sample_38_NuGen_4_TTAG_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_39_NuGen_14_CACG_R1.fastq   \
+/mnt/datab/DLVR2Chapkin/Sample_40_NuGen_7_GTCA_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_41_NuGen_5_AGGG_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_42_NuGen_15_GGAC_R1.fastq   \
+/mnt/datab/DLVR2Chapkin/Sample_43_NuGen_8_TATC_R1.fastq    \
+/mnt/datab/DLVR2Chapkin/Sample_44_NuGen_16_TCGA_R1.fastq   \
+)
+

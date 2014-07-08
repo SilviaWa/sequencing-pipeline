@@ -1,0 +1,13 @@
+species="hg19"
+samplelist=(\
+/mnt/data1/lampe-test-1/renamed/lane1_Denaturation_TruSeqRNA_6___GCCAAT_R1.fastq \
+/mnt/data1/lampe-test-1/renamed/lane1_RNALater_TruSeqRNA_12___CTTGTA_R1.fastq \
+/mnt/data1/lampe-test-1/renamed/lane1_Stool_100ng_TruSeqRNA_7___CAGATC_R1.fastq \
+/mnt/data1/lampe-test-1/renamed/lane1_Stool_20ng_TruSeqRNA_2___CGATGT_R1.fastq \
+/mnt/data1/lampe-test-1/renamed/lane1_Stool_400ng_TruSeqRNA_19___GTGAAA_R1.fastq \
+/mnt/data1/lampe-test-1/renamed/lane2_Denaturation_TruSeqRNA_6___GCCAAT_R1.fastq \
+/mnt/data1/lampe-test-1/renamed/lane2_RNALater_TruSeqRNA_12___CTTGTA_R1.fastq \
+/mnt/data1/lampe-test-1/renamed/lane2_Stool_100ng_TruSeqRNA_7___CAGATC_R1.fastq \
+/mnt/data1/lampe-test-1/renamed/lane2_Stool_20ng_TruSeqRNA_2___CGATGT_R1.fastq \
+/mnt/data1/lampe-test-1/renamed/lane2_Stool_400ng_TruSeqRNA_19___GTGAAA_R1.fastq \
+)

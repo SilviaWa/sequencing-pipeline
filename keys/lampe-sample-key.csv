@@ -1,0 +1,45 @@
+Sample id,Subject,Solution,RNA isolation,Library,ERCC,Barcode,BC sequence
+1,JK,RNA Later,regular,TruSeq,+,AR001,ATCACG(A)
+2,JK,RNA Later,regular,TruSeq,-,AR003,TTAGGC(A)
+3,JK,Denaturation,regular,TruSeq,+,AR008,ACTTGA(A)
+4,JK,RNA Later,clean,TruSeq,+,AR009,GATCAG(A)
+5,JK,RNA Later,clean,TruSeq,-,AR0010,TAGCTT(A)
+6,JK,Denaturation,clean,TruSeq,+,AR0011,GGCTAC(A)
+7,RZ,RNA Later,regular,TruSeq,+,AR0020,GTGGCC(T)
+8,RZ,RNA Later,regular,TruSeq,+,AR0021,GTTTCG(G)
+9,RZ,Denaturation,regular,TruSeq,-,AR0022,CGTACG(T)
+10,RZ,RNA Later,clean,TruSeq,+,AR0023,GAGTGG(A)
+11,RZ,RNA Later,clean,TruSeq,+,AR0025,ACTGAT(A)
+12,RZ,Denaturation,clean,TruSeq,-,AR0027,ATTCCT(T)
+13,JK,Denaturation,clean,DGE,-,BC1,ACCC
+14,JK,Denaturation,regular,Ovation,-,BC9,AAAA
+15,RZ,Denaturation,regular,DGE,-,BC6,CCAT
+16,JK,RNA Later,clean,DGE,-,BC10,CTGC
+17,RZ,RNA Later,clean,Ovation,-,BC11,GCTG
+18,JK,RNA Later,regular,Complete,+,BC2,CGTA
+19,JK,RNA Later,clean,Ovation,-,BC12,TGCT
+20,RZ,RNA Later,clean,Complete,+,BC3,GAGT
+21,JK,RNA Later,clean,Complete,+,BC4,TTAG
+22,RZ,RNA Later,clean,DGE,-,BC13,ATTT
+23,LD,RNA Shield,clean,DGE,-,BC7,GTCA
+24,JK,RNA Shield,regular,DGE,-,BC8,TATC
+25,JK,RNA Shield,clean,Ovation,-,BC14,CACG
+26,Stem cell,,,DGE,-,BC15,GGAC
+27,Stem cell,,,Ovation,-,BC16,TCGA
+28,Stem cell 10 ng,,,Complete,+,BC5,AGGG
+29,JK,Denaturation,clean,Complete,+,BC1,ACCC
+30,RZ,Denaturation,regular,Ovation,-,BC9,AAAA
+31,RZ,Denaturation,clean,DGE,-,BC10,CTGC
+32,JK,Denaturation,regular,Complete,+,BC6,CCAT
+33,JK,Denaturation,clean,Ovation,-,BC11,GCTG
+34,JK,Denaturation,regular,DGE,-,BC2,CGTA
+35,RZ,Denaturation,clean,Ovation,-,BC3,GAGT
+36,RZ,RNA Later,regular,DGE,-,BC12,TGCT
+37,JK,RNA Later,regular,Ovation,-,BC13,ATTT
+38,JK,RNA Later,regular,DGE,-,BC4,TTAG
+39,RZ,RNA Later,regular,Ovation,-,BC14,CACG
+40,RZ,RNA Later,regular,Complete,+,BC7,GTCA
+41,RZ,RNA Shield,regular,DGE,-,BC5,AGGG
+42,JK,RNA Shield,clean,DGE,-,BC15,GGAC
+43,JK,RNA Shield,clean,Complete,+,BC8,TATC
+44,LD,RNA Shield,clean,Ovation,-,BC16,TCGA

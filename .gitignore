@@ -1,0 +1,12 @@
+lists/*
+analysis/*
+map-results
+*.pyc
+output
+tmp
+*.fastq
+*.bz2
+*.gz
+*.h5
+*.log
+config.sh
