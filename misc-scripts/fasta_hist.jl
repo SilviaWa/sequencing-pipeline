@@ -9,8 +9,13 @@ FastaReader(fname) do fr
     end
 end
 
-vals = collect(values(fmap))
-histvals = hist(vals)
+k = collect(keys(fmap))
+v = collect(values(fmap))
+histvals = hist(v)
 
-print(histvals)
+println(histvals)
+
+lens = sort(v, rev=true)
+println(lens[1:10])
+println(lens[end-10:end])
 
