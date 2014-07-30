@@ -165,15 +165,6 @@ for experimentlist in "$@"; do
 
   hostrefdir=$REFBASE/$species
 
-    mitoref="$REFBASE/mito"
-    riboref="$REFBASE/ribo"
-    microref="$REFBASE/micro"
-    protozoaref="$REFBASE/protozoa"
-    fungiref="$REFBASE/fungi"
-    viralref="$REFBASE/viral"
-    erccref="$REFBASE/igenomes/ercc"
-    koloref="$REFBASE/kolo"
-
   for filepath in $samplelist; do
     nice="0"
     filewoext=$(basename $filepath)
@@ -211,20 +202,6 @@ for experimentlist in "$@"; do
     #bowtie2_align gfp $REFBASE/genes/gfp
     #snap_align gfp $REFBASE/genes/gfp
 
-    #bwa_align micro $microref
-    #star_align fungi $fungiref
-    #star_align protozoa $protozoaref
-
-    star_align ercc $erccref
-    #snap_align ercc $erccref
-    #snap_align mito $mitoref
-    #snap_align ribo $riboref
-    #snap_align viral $viralref
-
-    # Normally we dont use these:
-    #snap_align fungi $fungiref
-    #snap_align protozoa $protozoaref
-    
     ################################# HOST ##########################
     if [[ ! -s $currout/star/$species.count ]];
     then
@@ -237,50 +214,48 @@ for experimentlist in "$@"; do
         --readFilesIn $readpath \
         --runThreadN $THREADS \
         --sjdbGTFfile $hostrefdir/genes.gtf \
-        --outSAMstrandField intronMotif \
-        --outFilterIntronMotifs RemoveNoncanonicalUnannotated \
         --genomeLoad LoadAndKeep \
         > /dev/null
-      popd
-      echo "Done."
-        #--outFilterMismatchNoverLmax 0.0 \
-        #--outFilterScoreMinOverLread 0.0 \
 
+      echo "Done."
       mydate
       echo -n "Filtering STAR host alignments... "
-      pushd $currout/star/$species
-      sam=Aligned.out.sam
-      head -1000 $sam | grep "^@" | egrep -v "chrM|random" | sort -k2,2d > Aligned.filt.sam
-      time samtools view -S $sam | egrep -v "chrM|random" \
-        | sort -k3,3d -k4,4n --parallel=$THREADS -S 50% -T $TMPDIR >> Aligned.filt.sam
-      time samtools view -Sb -F 0x4 Aligned.filt.sam > Aligned.filt.bam
-      samtools flagstat Aligned.filt.bam | head -1 | cut -f1 -d' ' > ../$species.count
-      samtools index Aligned.filt.bam
-      rm $sam
-      rm Aligned.filt.sam
+
+      samtools view -Sb -F 0x4 Aligned.out.sam > Aligned.out.bam
+      samtools flagstat Aligned.out.bam | head -1 | cut -f1 -d' ' > ../$species.count
+      samtools index Aligned.out.bam
+      ln -s Aligned.out.bam Aligned.filt.bam # kludge
+      #rm Aligned.out.sam
+
       popd
       echo "Done."
     fi
 
-    if [[ ! -s $currout/clstar/$species/genes.fpkm_tracking ]];
+    if [[ ! -s $currout/sf/$species/quant.sf ]];
     then
       mydate
-      echo -n "Running Cufflinks on STAR host reads ... "
-      mkdir -p $currout/clstar/$species
-      nice -n $nice time cufflinks -q -o $currout/clstar/$species -p $THREADS \
-        -G $hostrefdir/Annotation/Genes/genes.gtf \
-        $currout/star/$species/Aligned.filt.bam
+      echo -n "Running Sailfish against host reference ... "
+      mkdir -p $currout/sf/$species
+      pushd $currout/sf/$species
+      export LD_LIBRARY_PATH=$SAILFISHLIB
+      eval nice -n $nice /usr/bin/time $SAILFISHBIN \
+        quant -i $hostrefdir/Sailfish \
+        -l "T=SE:S=U" \
+        -r $readpath \
+        -p $THREADS \
+        -o . &> out.log
+      popd
       echo "Done."
     fi
-    
-    if [[ ! -s $currout/star/ercc.counts ]];
+
+    if [[ ! -s $currout/sf/$species/genequant.sf ]];
     then
       mydate
-      echo -n "Post Processing ERCC alignments ... "
-      lbzcat $currout/star/ercc/ercc.bam.bz2 | samtools view -F 0x4 - \
-        | cut -f 3 | sort | uniq -c > $currout/star/ercc.counts
-      #samtools view -F 0x4 $currout/snap/ercc.bam \
-        #| cut -f 3 | sort | uniq -c > $currout/snap/ercc.counts
+      echo -n "Aggregating transcripts to genes ... "
+      mkdir -p $currout/sf/$species
+      pushd $currout/sf/$species
+      genesum -e quant.sf -k gene_name -g $hostrefdir/genes.gtf -o genequant.sf
+      popd
       echo "Done."
     fi
 
@@ -295,8 +270,10 @@ for experimentlist in "$@"; do
     echo "##################################################################"
 
   done # over files sample-list
-  echo $currouts
+  mydate 
+  echo -n "Counting Reads using HTSeq-count ... "
   eval parallel --gnu main-scripts/htseq.sh {} $species $hostrefdir ::: $currouts
+  echo "Done."
 done # over arguments
 
 mydate

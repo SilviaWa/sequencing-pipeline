@@ -1,0 +1,6 @@
+species="grcm38"
+samplelist=(\
+/mnt/datab/test-mouse/xaa.fastq.bz2 \
+/mnt/datab/test-mouse/xab.fastq.bz2 \
+/mnt/datab/test-mouse/xac.fastq.bz2 \
+)
