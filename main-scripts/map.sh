@@ -154,9 +154,9 @@ if [[ -z $@ ]]; then
   echo "to out.log (and also to your screen"
 fi
 
-currouts=""
 
 for experimentlist in "$@"; do
+  currouts=""
   samplename=$(basename $experimentlist)
   outputdir="./map-results/${samplename}"
   mkdir -p $outputdir
@@ -214,6 +214,7 @@ for experimentlist in "$@"; do
         --readFilesIn $readpath \
         --runThreadN $THREADS \
         --sjdbGTFfile $hostrefdir/genes.gtf \
+        --outSAMtype BAM Unsorted \
         --genomeLoad LoadAndKeep \
         > /dev/null
 
@@ -221,43 +222,43 @@ for experimentlist in "$@"; do
       mydate
       echo -n "Filtering STAR host alignments... "
 
-      samtools view -Sb -F 0x4 Aligned.out.sam > Aligned.out.bam
+      #samtools view -Sb -F 0x4 Aligned.out.sam > Aligned.out.bam
       samtools flagstat Aligned.out.bam | head -1 | cut -f1 -d' ' > ../$species.count
-      samtools index Aligned.out.bam
+      #samtools sort Aligned.out.bam Aligned.sort.bam
+      #samtools index Aligned.sort.bam
       ln -s Aligned.out.bam Aligned.filt.bam # kludge
-      #rm Aligned.out.sam
 
       popd
       echo "Done."
     fi
 
-    if [[ ! -s $currout/sf/$species/quant.sf ]];
-    then
-      mydate
-      echo -n "Running Sailfish against host reference ... "
-      mkdir -p $currout/sf/$species
-      pushd $currout/sf/$species
-      export LD_LIBRARY_PATH=$SAILFISHLIB
-      eval nice -n $nice /usr/bin/time $SAILFISHBIN \
-        quant -i $hostrefdir/Sailfish \
-        -l "T=SE:S=U" \
-        -r $readpath \
-        -p $THREADS \
-        -o . &> out.log
-      popd
-      echo "Done."
-    fi
+    #if [[ ! -s $currout/sf/$species/quant.sf ]];
+    #then
+      #mydate
+      #echo -n "Running Sailfish against host reference ... "
+      #mkdir -p $currout/sf/$species
+      #pushd $currout/sf/$species
+      #export LD_LIBRARY_PATH=$SAILFISHLIB
+      #eval nice -n $nice /usr/bin/time $SAILFISHBIN \
+        #quant -i $hostrefdir/Sailfish \
+        #-l "T=SE:S=U" \
+        #-r $readpath \
+        #-p $THREADS \
+        #-o . &> out.log
+      #popd
+      #echo "Done."
+    #fi
 
-    if [[ ! -s $currout/sf/$species/genequant.sf ]];
-    then
-      mydate
-      echo -n "Aggregating transcripts to genes ... "
-      mkdir -p $currout/sf/$species
-      pushd $currout/sf/$species
-      genesum -e quant.sf -k gene_name -g $hostrefdir/genes.gtf -o genequant.sf
-      popd
-      echo "Done."
-    fi
+    #if [[ ! -s $currout/sf/$species/genequant.sf ]];
+    #then
+      #mydate
+      #echo -n "Aggregating transcripts to genes ... "
+      #mkdir -p $currout/sf/$species
+      #pushd $currout/sf/$species
+      #genesum -e quant.sf -k gene_name -g $hostrefdir/genes.gtf -o genequant.sf
+      #popd
+      #echo "Done."
+    #fi
 
     if [[ ! -e $currout/diversity.count ]];
     then
@@ -272,7 +273,7 @@ for experimentlist in "$@"; do
   done # over files sample-list
   mydate 
   echo -n "Counting Reads using HTSeq-count ... "
-  eval parallel --gnu main-scripts/htseq.sh {} $species $hostrefdir ::: $currouts
+  eval parallel --gnu -j15 main-scripts/htseq.sh {} $species $hostrefdir ::: $currouts
   echo "Done."
 done # over arguments
 
