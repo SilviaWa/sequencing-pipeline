@@ -40,7 +40,14 @@ key = read.csv(args[2], header=TRUE, row.names=1)
 # Filter out MT and ERCC reads (throwing off normalization? or no?)
 
 #############################################
-#factors = key[key$kit == "RNALater",]
+sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts))
+counts = counts[!sel,]
+
+counts = counts[,key$kit == "RNALater"]
+key = key[key$kit == "RNALater",]
+
+ename = "edger-filt-later"
+
 factors = key[order(rownames(key)), c("idnum","tissue","location","treatment")]
 factors$idnum = factor(factors$idnum)
 factors$treatment = relevel(factors$treatment, "placebo")
@@ -104,17 +111,17 @@ run_analysis = function(outfile, contrast=NULL, coef=NULL) {
 #run_analysis(file.path("analysis",bname,"edger-treatment-rectum.csv"), 
 
 
-system(paste("mkdir -p ",file.path("analysis",bname,"edger")))
+system(paste("mkdir -p ",file.path("analysis",bname,ename)))
 
-run_analysis(file.path("analysis",bname,"edger","edger2-Lignans.csv"),coef=11) 
-run_analysis(file.path("analysis",bname,"edger","edger2-Stromal.csv"),coef=12)
-run_analysis(file.path("analysis",bname,"edger","edger2-Sigmoid.csv"),coef=13)
+run_analysis(file.path("analysis",bname,ename,"edger-Lignans.csv"),coef=dim(design)[2]-2) 
+run_analysis(file.path("analysis",bname,ename,"edger-Stromal.csv"),coef=dim(design)[2]-1)
+run_analysis(file.path("analysis",bname,ename,"edger-Sigmoid.csv"),coef=dim(design)[2])
 
 ## output MA, MDS, etc.., plots
-png(file.path("analysis",bname,"edger","edger-mds.png"))
-p = plotMDS(y)
-dev.off()
+#png(file.path("analysis",bname,ename,"edger-mds.png"))
+#p = plotMDS(y)
+#dev.off()
 
-png(file.path("analysis",bname,"edger","edger-bcv.png"))
+png(file.path("analysis",bname,ename,"edger-bcv.png"))
 p = plotBCV(y)
 dev.off()

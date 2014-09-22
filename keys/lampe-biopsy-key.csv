@@ -1,33 +1,79 @@
-sampleid,location,tissue,treatment
-6102P1RE,rectum,epithelium,placebo
-6102P1RS,rectum,stroma,placebo
-6102P1SE,sigmoid,epithelium,placebo
-6102P1SS,sigmoid,stroma,placebo
-6102P2RE,rectum,epithelium,lignans
-6102P2RS,rectum,stroma,lignans
-6102P2SE,sigmoid,epithelium,lignans
-6102P2SS,sigmoid,stroma,lignans
-6103P1RE,rectum,epithelium,placebo
-6103P1RS,rectum,stroma,placebo
-6103P1SE,sigmoid,epithelium,placebo
-6103P1SS,sigmoid,stroma,placebo
-6103P2RE,rectum,epithelium,lignans
-6103P2RS,rectum,stroma,lignans
-6103P2SE,sigmoid,epithelium,lignans
-6103P2SS,sigmoid,stroma,lignans
-6106P1RE,rectum,epithelium,lignans
-6106P1RS,rectum,stroma,lignans
-6106P1SE,sigmoid,epithelium,lignans
-6106P1SS,sigmoid,stroma,lignans
-6106P2RE,rectum,epithelium,placebo
-6106P2RS,rectum,stroma,placebo
-6106P2SE,sigmoid,epithelium,placebo
-6106P2SS,sigmoid,stroma,placebo
-6108P1RE,rectum,epithelium,placebo
-6108P1RS,rectum,stroma,placebo
-6108P1SE,sigmoid,epithelium,placebo
-6108P1SS,sigmoid,stroma,placebo
-6108P2RE,rectum,epithelium,lignans
-6108P2RS,rectum,stroma,lignans
-6108P2SE,sigmoid,epithelium,lignans
-6108P2SS,sigmoid,stroma,lignans
+"sample_id","idnum","gender","batch","kit","randomization","treatment","location","tissue"
+"6102_P1_RE","6102","Male","11/25/13","RNALater","AB","Lignans","Sigmoid","Epithelial"
+"6102_P1_RS","6102","Male","11/25/13","RNALater","AB","Lignans","Sigmoid","Stromal"
+"6102_P1_SE","6102","Male","11/25/13","RNALater","AB","Lignans","Rectum","Epithelial"
+"6102_P1_SS","6102","Male","11/25/13","RNALater","AB","Lignans","Rectum","Stromal"
+"6102_P2_RE","6102","Male","11/25/13","RNALater","AB","placebo","Sigmoid","Epithelial"
+"6102_P2_RS","6102","Male","11/25/13","RNALater","AB","placebo","Sigmoid","Stromal"
+"6102_P2_SE","6102","Male","11/25/13","RNALater","AB","placebo","Rectum","Epithelial"
+"6102_P2_SS","6102","Male","11/25/13","RNALater","AB","placebo","Rectum","Stromal"
+"6103_P1_RE","6103","Female","11/25/13","RNALater","AB","Lignans","Sigmoid","Epithelial"
+"6103_P1_RS","6103","Female","11/25/13","RNALater","AB","Lignans","Sigmoid","Stromal"
+"6103_P1_SE","6103","Female","11/25/13","RNALater","AB","Lignans","Rectum","Epithelial"
+"6103_P1_SS","6103","Female","11/25/13","RNALater","AB","Lignans","Rectum","Stromal"
+"6103_P2_RE","6103","Female","11/25/13","RNALater","AB","placebo","Sigmoid","Epithelial"
+"6103_P2_RS","6103","Female","11/25/13","RNALater","AB","placebo","Sigmoid","Stromal"
+"6103_P2_SE","6103","Female","11/25/13","RNALater","AB","placebo","Rectum","Epithelial"
+"6103_P2_SS","6103","Female","11/25/13","RNALater","AB","placebo","Rectum","Stromal"
+"6105_P1_RE","6105","Female","03/25/14","RNA SHIELD","BA","placebo","Sigmoid","Epithelial"
+"6105_P1_RS","6105","Female","03/25/14","RNA SHIELD","BA","placebo","Sigmoid","Stromal"
+"6105_P1_SE","6105","Female","03/25/14","RNA SHIELD","BA","placebo","Rectum","Epithelial"
+"6105_P1_SS","6105","Female","03/25/14","RNA SHIELD","BA","placebo","Rectum","Stromal"
+"6105_P2_RE","6105","Female","03/25/14","RNA SHIELD","BA","Lignans","Sigmoid","Epithelial"
+"6105_P2_RS","6105","Female","03/25/14","RNA SHIELD","BA","Lignans","Sigmoid","Stromal"
+"6105_P2_SE","6105","Female","03/25/14","RNA SHIELD","BA","Lignans","Rectum","Epithelial"
+"6105_P2_SS","6105","Female","03/25/14","RNA SHIELD","BA","Lignans","Rectum","Stromal"
+"6106_P1_RE","6106","Male","11/25/13","RNALater","BA","placebo","Sigmoid","Epithelial"
+"6106_P1_RS","6106","Male","11/25/13","RNALater","BA","placebo","Sigmoid","Stromal"
+"6106_P1_SE","6106","Male","11/25/13","RNALater","BA","placebo","Rectum","Epithelial"
+"6106_P1_SS","6106","Male","11/25/13","RNALater","BA","placebo","Rectum","Stromal"
+"6106_P2_RE","6106","Male","11/25/13","RNALater","BA","Lignans","Sigmoid","Epithelial"
+"6106_P2_RS","6106","Male","11/25/13","RNALater","BA","Lignans","Sigmoid","Stromal"
+"6106_P2_SE","6106","Male","11/25/13","RNALater","BA","Lignans","Rectum","Epithelial"
+"6106_P2_SS","6106","Male","11/25/13","RNALater","BA","Lignans","Rectum","Stromal"
+"6108_P1_RE","6108","Male","11/25/13","RNALater","AB","Lignans","Sigmoid","Epithelial"
+"6108_P1_RS","6108","Male","11/25/13","RNALater","AB","Lignans","Sigmoid","Stromal"
+"6108_P1_SE","6108","Male","11/25/13","RNALater","AB","Lignans","Rectum","Epithelial"
+"6108_P1_SS","6108","Male","11/25/13","RNALater","AB","Lignans","Rectum","Stromal"
+"6108_P2_RE","6108","Male","11/25/13","RNALater","AB","placebo","Sigmoid","Epithelial"
+"6108_P2_RS","6108","Male","11/25/13","RNALater","AB","placebo","Sigmoid","Stromal"
+"6108_P2_SE","6108","Male","11/25/13","RNALater","AB","placebo","Rectum","Epithelial"
+"6108_P2_SS","6108","Male","11/25/13","RNALater","AB","placebo","Rectum","Stromal"
+"6110_P1_RE","6110","Female","03/25/14","RNALater","AB","Lignans","Sigmoid","Epithelial"
+"6110_P1_RS","6110","Female","03/25/14","RNALater","AB","Lignans","Sigmoid","Stromal"
+"6110_P1_SE","6110","Female","03/25/14","RNALater","AB","Lignans","Rectum","Epithelial"
+"6110_P1_SS","6110","Female","03/25/14","RNALater","AB","Lignans","Rectum","Stromal"
+"6110_P2_RE","6110","Female","03/25/14","RNALater","AB","placebo","Sigmoid","Epithelial"
+"6110_P2_RS","6110","Female","03/25/14","RNALater","AB","placebo","Sigmoid","Stromal"
+"6110_P2_SE","6110","Female","03/25/14","RNALater","AB","placebo","Rectum","Epithelial"
+"6110_P2_SS","6110","Female","03/25/14","RNALater","AB","placebo","Rectum","Stromal"
+"6121_P1_RE","6121","Male","03/25/14","RNALater","BA","placebo","Sigmoid","Epithelial"
+"6121_P1_RS","6121","Male","03/25/14","RNALater","BA","placebo","Sigmoid","Stromal"
+"6121_P1_SE","6121","Male","03/25/14","RNALater","BA","placebo","Rectum","Epithelial"
+"6121_P1_SS","6121","Male","03/25/14","RNALater","BA","placebo","Rectum","Stromal"
+"6121_P2_RE","6121","Male","03/25/14","RNALater","BA","Lignans","Sigmoid","Epithelial"
+"6121_P2_RS","6121","Male","03/25/14","RNALater","BA","Lignans","Sigmoid","Stromal"
+"6121_P2_SE","6121","Male","03/25/14","RNALater","BA","Lignans","Rectum","Epithelial"
+"6121_P2_SS","6121","Male","03/25/14","RNALater","BA","Lignans","Rectum","Stromal"
+"6122_P1_RE","6122","Male","03/25/14","RNA SHIELD","BA","placebo","Sigmoid","Epithelial"
+"6122_P1_RS","6122","Male","03/25/14","RNA SHIELD","BA","placebo","Sigmoid","Stromal"
+"6122_P1_SE","6122","Male","03/25/14","RNA SHIELD","BA","placebo","Rectum","Epithelial"
+"6122_P1_SS","6122","Male","03/25/14","RNA SHIELD","BA","placebo","Rectum","Stromal"
+"6122_P2_RE","6122","Male","03/25/14","RNA SHIELD","BA","Lignans","Sigmoid","Epithelial"
+"6122_P2_RS","6122","Male","03/25/14","RNA SHIELD","BA","Lignans","Sigmoid","Stromal"
+"6122_P2_SE","6122","Male","03/25/14","RNA SHIELD","BA","Lignans","Rectum","Epithelial"
+"6122_P2_SS","6122","Male","03/25/14","RNA SHIELD","BA","Lignans","Rectum","Stromal"
+"6123_P1_RE","6123","Female","03/25/14","RNALater","AB","Lignans","Sigmoid","Epithelial"
+"6123_P1_RS","6123","Female","03/25/14","RNALater","AB","Lignans","Sigmoid","Stromal"
+"6123_P1_SE","6123","Female","03/25/14","RNALater","AB","Lignans","Rectum","Epithelial"
+"6123_P1_SS","6123","Female","03/25/14","RNALater","AB","Lignans","Rectum","Stromal"
+"6123_P2_RS","6123","Female","03/25/14","RNALater","AB","placebo","Sigmoid","Stromal"
+"6123_P2_SS","6123","Female","03/25/14","RNALater","AB","placebo","Rectum","Stromal"
+"6127_P1_RE","6127","Male","03/25/14","RNA SHIELD","BA","placebo","Sigmoid","Epithelial"
+"6127_P1_RS","6127","Male","03/25/14","RNA SHIELD","BA","placebo","Sigmoid","Stromal"
+"6127_P1_SE","6127","Male","03/25/14","RNA SHIELD","BA","placebo","Rectum","Epithelial"
+"6127_P1_SS","6127","Male","03/25/14","RNA SHIELD","BA","placebo","Rectum","Stromal"
+"6127_P2_RE","6127","Male","03/25/14","RNA SHIELD","BA","Lignans","Sigmoid","Epithelial"
+"6127_P2_RS","6127","Male","03/25/14","RNA SHIELD","BA","Lignans","Sigmoid","Stromal"
+"6127_P2_SE","6127","Male","03/25/14","RNA SHIELD","BA","Lignans","Rectum","Epithelial"
+"6127_P2_SS","6127","Male","03/25/14","RNA SHIELD","BA","Lignans","Rectum","Stromal"
