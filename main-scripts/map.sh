@@ -21,7 +21,7 @@ snap_align () {
       then
         echo "Snap .gz unsupported currently"
         exit -1
-        readpath="<(unpigz -c ${filepath})"
+        readpath="<(zcat ${filepath})"
       elif [[ ${filepath: -4} == ".bz2" ]];
       then
         lbunzip2 -k $filepath
@@ -176,7 +176,7 @@ for experimentlist in "$@"; do
       exit -1
     elif [[ ${filepath: -3} == ".gz" ]];
     then
-      readpath="<(unpigz -c ${filepath})"
+      readpath="<(zcat ${filepath})"
     elif [[ ${filepath: -4} == ".bz2" ]];
     then
       readpath="<(lbzcat ${filepath})"
