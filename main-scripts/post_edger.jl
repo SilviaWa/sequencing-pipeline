@@ -1,6 +1,7 @@
 using Gadfly
 using Color
 using DataFrames
+using HDF5, JLD
 
 
 function makehist(data, title, col) 
@@ -12,17 +13,15 @@ function makehist(data, title, col)
                                 Guide.title(title), Guide.xlabel(col), Guide.ylabel("Number of Genes"), Geom.bar)
 end
 
+makesmear(data, title) = plot(data, x="logCPM", y="logFC", Theme(default_point_size=0.1mm), Guide.title(title), Geom.point)
+
 function make_plots(epath)
 
     print("Reading data in...")
     desets = [fname=>readtable(joinpath(epath,fname))
-                for fname in filter(x->ismatch(r"edger.*.csv",x),readdir(epath))]
+                for fname in filter(x->ismatch(r"^edger.*.csv",x),readdir(epath))]
     println("Done.")
-
     print("Making plots...")
-
-    makesmear(data, title) = plot(data, x="logCPM", y="logFC", Theme(default_point_size=0.1mm),
-                                        Guide.title(title), Geom.point)
 
     pvals = hstack([makehist(y,x,"PValue") for (x,y) in desets]...)
     fdrs = hstack([makehist(y,x,"FDR") for (x,y) in desets]...)
@@ -38,6 +37,22 @@ function make_plots(epath)
     println("Done.")
 end
     
+function filt_ncrna(epath)
+    fname = "/mnt/datab/refs/grcm38/gtfdata.jld"
+    namebiotype = load(fname, "namebiotype")
+    cats = Set(["pseudogene","TR_V_pseudogene","lincRNA","polymorphic_pseudogene","3prime_overlapping_ncrna","IG_V_pseudogene"])
+    ncset = filter((x,y)->y in cats, namebiotype) |> keys |> collect |> Set
+
+    desets = [fname=>readtable(joinpath(epath,fname))
+                for fname in filter(x->ismatch(r"^edger.*.csv",x),readdir(epath))]
+
+    for (fname,dat) in desets
+        sel = Bool[x in ncset for x in dat[:Row_names]]
+        ncdata = dat[sel, :]
+        writetable(joinpath(epath,"lncrna-"*fname), ncdata)
+    end
+end
+
 if length(ARGS)==1 && isfile(ARGS[1])
     bname = basename(directory)
     epath = joinpath("analysis",bname,"edger")
