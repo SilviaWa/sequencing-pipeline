@@ -13,7 +13,7 @@ hostrefdir=$3
 if [[ ! -s $currout/star/$hostspecies/htseq.list ]];
 then
   pushd $currout/star/$hostspecies
-  htseq-count Aligned.filt.bam $hostrefdir/genes.gtf -f bam -i gene_name | head -n -5 >! htseq.list
+  htseq-count Aligned.filt.bam $hostrefdir/genes.gtf --stranded=no -f bam -i gene_name | head -n -5 >! htseq.list
   awk '{if ($2>0) print }' htseq.list \
     | sort -k2gr > htseq.0.list
   awk '{if ($2>3) print}' htseq.0.list > htseq.3.list
