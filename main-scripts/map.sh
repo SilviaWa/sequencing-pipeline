@@ -13,33 +13,20 @@ snap_align () {
       mkdir -p $currout/snap
       pushd $currout/snap
 
-      if [[ ${filepath: -7} == ".tar.gz" ]];
+      if [[ ${filepath: -3} == ".gz" ]];
       then
-        echo "Snap .tar.gz unsupported currently"
-        exit -1
-      elif [[ ${filepath: -3} == ".gz" ]];
-      then
-        echo "Snap .gz unsupported currently"
-        exit -1
-        readpath="<(zcat ${filepath})"
+        readpath="zcat ${filepath}"
       elif [[ ${filepath: -4} == ".bz2" ]];
       then
-        lbunzip2 -k $filepath
-        eval nice -n $nice /usr/bin/time $SNAPBIN \
-          single $ref/snap ${filepath:r} -t $THREADS -b -o $org.sam &> $org.log
-        rm ${filepath:r}
-
-      elif [[ ${filepath: -4} == ".zip" ]];
-      then
-        echo "Snap .zip unsupported currently"
-        exit -1
+        readpath="lbzcat ${filepath}"
       else
-        eval nice -n $nice /usr/bin/time $SNAPBIN \
-          single $ref/snap $readpath -t $THREADS -b -o $org.sam &> $org.log
+        readpath="cat $filepath"
       fi
 
+      eval nice -n $nice /usr/bin/time $readpath | $SNAPBIN \
+        single $ref/snap -fastq - -mrl 40 -C-- -t $THREADS -b -o $org.sam &> $org.log
+
       if [ `grep -vc "^@" $org.sam` -eq 0 ];
-      #if [ -z `head -1000000 $org.sam | grep -v "^@"` ];
       then
         echo "0" > $org.count
       else
@@ -166,6 +153,11 @@ for experimentlist in "$@"; do
   hostrefdir=$REFBASE/$species
 
   for filepath in $samplelist; do
+    if [[ -z ${filepath//[[:blank:]]/} ]]
+    then
+      continue
+    fi
+
     nice="0"
     filewoext=$(basename $filepath)
     file=${filewoext%%.*}
@@ -202,7 +194,7 @@ for experimentlist in "$@"; do
     #bowtie2_align gfp $REFBASE/genes/gfp
     #snap_align gfp $REFBASE/genes/gfp
 
-    ################################# HOST ##########################
+    ################################ HOST ##########################
     if [[ ! -s $currout/star/$species.count ]];
     then
       mydate
