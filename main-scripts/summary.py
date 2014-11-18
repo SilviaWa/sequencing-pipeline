@@ -38,6 +38,10 @@ summary_list = [
     ,('{}-reads'.format(species), get_count('{}.count'.format(species)))
     ,('{}-uniq'.format(species), get_star(batchroot, 'Uniquely mapped reads number', species))
     ,('{}-multi'.format(species), get_star(batchroot, 'Number of reads mapped to multiple loci',species))
+    ,('{}-annotated-reads'.format(species), get_count('{}.annotated.count'.format(species)))
+    ,('{}-gene-reads'.format(species), get_count('{}.gene.count'.format(species)))
+    ,('mito-reads'.format(species), get_count('mito.count'.format(species)))
+    ,('ercc-reads'.format(species), get_count('ercc.count'.format(species)))
     ,('htseq-0-genes', get_count('htseq.0.count',species))
     ,('htseq-3-genes', get_count('htseq.3.count',species))
     ,('htseq-10-genes', get_count('htseq.10.count',species))
@@ -73,6 +77,7 @@ def get_data(batchroot, species, data_name, index_col=0, sep='\t', gen_df=None):
     return data.transpose()
 
 final_count = get_data(batchroot, species, 'htseq.list')
+ercc = get_data(batchroot, species, 'ercc.list')
 
 final_count.to_csv('analysis/{}/{}-count.csv'.format(batchname,batchname), index_label="sample_id")
 final_count.T.to_csv('analysis/{}/{}-count.T.csv'.format(batchname,batchname), index_label="sample_id")
@@ -80,5 +85,6 @@ final_count.T.to_csv('analysis/{}/{}-count.T.csv'.format(batchname,batchname), i
 fid = pa.HDFStore('analysis/{}/{}.h5'.format(batchname,batchname), complib='blosc', complevel=9)
 fid['counts'] = final_count
 fid['key'] = key
+fid['ercc'] = ercc
 fid.close()
 

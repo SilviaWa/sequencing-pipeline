@@ -10,10 +10,29 @@ currout=$1
 hostspecies=$2
 hostrefdir=$3
 
-if [[ ! -s $currout/star/$hostspecies/htseq.list ]];
+if [[ ! -s $currout/star/$hostspecies/htseq.list.pris2 ]];
 then
   pushd $currout/star/$hostspecies
-  htseq-count Aligned.filt.bam $hostrefdir/genes.gtf --stranded=no -f bam -i gene_name | head -n -5 >! htseq.list
+  #htseq-count Aligned.filt.bam $hostrefdir/genes.gtf --stranded=no -f bam -i gene_name >! htseq.list.pris
+  tail -5 htseq.list.pris >! htseq.log
+  head -n -5 htseq.list.pris >! htseq.list
+
+  # ERCC
+  grep "^ERCC-" htseq.list >! ercc.list
+  awk '{ sum+=$2 } END { print sum }' ercc.list >! ercc.count
+
+  # Mitochondrial
+  grep -i "^MT-" htseq.list >! mito.list
+  awk '{ sum+=$2 } END { print sum }' mito.list >! mito.count
+
+  awk '{ sum+=$2 } END { print sum }' htseq.list >! $hostspecies.annotated.count
+
+  # Filter out all MT and ERCC reads
+  sed -i '/^MT-/Id;/^ERCC-/Id' htseq.list
+  # grep wouldn't work here for inplace operations ^^
+
+  awk '{ sum+=$2 } END { print sum }' htseq.list >! $hostspecies.gene.count
+
   awk '{if ($2>0) print }' htseq.list \
     | sort -k2gr > htseq.0.list
   awk '{if ($2>3) print}' htseq.0.list > htseq.3.list
@@ -23,22 +42,3 @@ then
   wc -l htseq.10.list | cut -f1 -d' ' > htseq.10.count
   popd
 fi
-############# Gene FPKMs #################
-#if [[ ! -s $currout/clstar/$hostspecies/genes.full ]];
-#then
-  #mydate
-  #echo -n "Filtering Gene counts ... "
-  #pushd $currout/clstar/$hostspecies
-  #tail -n +2 genes.fpkm_tracking \
-    #| cut -f 1,10 \
-    #| tee genes.full \
-    #| awk '{if ($2>0) print }'  \
-    #| sort -k2gr > genes.filt
-  #awk '{if ($2>1) print}' genes.filt > genes.1.filt
-  #awk '{if ($2>10) print}' genes.1.filt > genes.10.filt
-  #wc -l genes.filt | cut -f1 -d' ' > genes.count
-  #wc -l genes.1.filt | cut -f1 -d' ' > genes.1.count
-  #wc -l genes.10.filt | cut -f1 -d' ' > genes.10.count
-  #popd
-  #echo "Done."
-#fi
