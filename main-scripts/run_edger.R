@@ -1,8 +1,8 @@
 library(edgeR)
 
 #args = commandArgs(trailing=TRUE)
-args = c("lists/organoid","keys/organoid.csv")
-#args = c("lists/lampe-biopsy-ercc38","keys/lampe-biopsy-key.csv")
+#args = c("lists/organoid","keys/organoid.csv")
+args = c("lists/lampe-biopsy-ercc38","keys/lampe-biopsy-key.csv")
 #args = c("lists/lampe-biopsy-ercc38","keys/lampe-biopsy-key.csv","location,treatment")
 
 #if (length(args) != 3) {
@@ -39,13 +39,55 @@ key = read.csv(args[2], header=TRUE, row.names=1)
 #factors$treatment = relevel(factors$treatment, "placebo")
 #design = model.matrix(~0+treatment+tissue+location, data=factors)
 #############################################
+#sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
+#counts = counts[!sel,]
+#ename = "edger-filt"
+
+#factors = key[order(rownames(key)),,drop=F]
+#factors$treatment = relevel(factors$treatment, "DMSO")
+#design = model.matrix(~treatment, data=factors)
+#########################
+#sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
+#counts = counts[!sel,]
+#ename = "edger-2x2"
+#factors = key[order(rownames(key)), c("treatment","tissue","location")]
+#factors$treatment = relevel(factors$treatment, "placebo")
+#design = model.matrix(~treatment+tissue+location, data=factors)
+#design = model.matrix(~treatment*tissue, data=factors)
+#groups = factor(paste(factors$treatment,factors$tissue,sep='.'))
+#groups = factor(paste(factors$treatment,factors$location,sep='.'))
+#########################
 sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
 counts = counts[!sel,]
-ename = "edger-filt"
+ename = "edger-2x2-trtadd"
+factors = key[order(rownames(key)), c("treatment","tissue")]
+factors$treatment = relevel(factors$treatment, "placebo")
+design = model.matrix(~treatment+tissue, data=factors)
+groups = factors$treatment 
+#########################
+#########################
+#sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
+#counts = counts[!sel,]
+#ename = "edger-trt"
+#factors = key[order(rownames(key)), c("treatment")]
+#factors = relevel(factors, "placebo")
+#design = model.matrix(~factors)
+#groups = factor(factors)
+#########################
+#sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
+#counts = counts[!sel,order(names(counts))]
+#key = key[order(rownames(key)),]
 
-factors = key[order(rownames(key)),,drop=F]
-factors$treatment = relevel(factors$treatment, "DMSO")
-design = model.matrix(~treatment, data=factors)
+#sel = key$tissue == "Stromal"
+##sel = key$tissue == "Epithelial"
+#counts = counts[,sel]
+#key = key[sel,]
+
+#ename = "edger-stromal-only"
+#factors = key[order(rownames(key)), c("treatment")]
+#factors = relevel(factors, "placebo")
+#design = model.matrix(~factors)
+#groups = factor(factors)
 #########################
 #counts = counts[,key$kit == "RNALater"]
 #key = key[key$kit == "RNALater",]
@@ -69,19 +111,19 @@ counts = counts[,order(names(counts))]
 # Read into DGEList for edgeR
 y = DGEList(counts=counts)
 
-## run analysis
+# run analysis
 y = estimateGLMCommonDisp(y, design)
 y = estimateGLMTrendedDisp(y, design)
 y = estimateGLMTagwiseDisp(y, design)
 fit = glmFit(y, design)
 
 ## get counts for each group
-dfs = split.data.frame(t(counts), factors$treatment)
+dfs = split.data.frame(t(counts), groups)
 dfss = sapply(dfs, colMeans)
 
-group_names = levels(factors$treatment)
-group_names_means = sapply(group_names, function(x) paste("mean_",x,sep=""), USE.NAMES=FALSE)
-colnames(dfss) = group_names_means
+#group_names = levels(groups)
+#group_names_means = sapply(group_names, function(x) paste("mean_",x,sep=""), USE.NAMES=FALSE)
+#colnames(dfss) = group_names_means
 
 #### Write results
 run_analysis = function(outfile, contrast=NULL, coef=NULL) {
@@ -97,6 +139,14 @@ run_analysis = function(outfile, contrast=NULL, coef=NULL) {
   write.csv(ot1,outfile,row.names=FALSE)
   #detags = rownames(topTags(lrt,n=20))
   print(outfile)
+  
+  if (!is.null(lrt$table$logFC)){
+    detags = rownames(ot1)[ot1$FDR < 0.05]
+    png(paste(outfile,".png"))
+    plotSmear(lrt, de.tags=detags)
+    abline(h=c(-2,2),col="blue")
+    dev.off()
+  }
   #print(cpm(y)[detags,])
   #print(summary(decideTestsDGE(lrt, p=0.05, adjust="BH")))
   #print(summary(decideTestsDGE(lrt, p=0.05, adjust="none")))
@@ -123,21 +173,21 @@ system(paste("mkdir -p ",file.path("analysis",bname,ename)))
 ##[7] "Stromal.Sigmoid.Lignans"    "Stromal.Sigmoid.placebo"  
 #run_analysis(file.path("analysis",bname,"edger-treatment-rectum.csv"), 
 
+meta_run = function(coef) {run_analysis(file.path("analysis",bname,ename,paste("edger-",colnames(design)[coef],".csv",sep="")),coef=coef)}
 
-
-run_analysis(file.path("analysis",bname,ename,"edger-all.csv"),coef=2:dim(design)[2]) 
-run_analysis(file.path("analysis",bname,ename,"edger-indole.csv"),coef=2)
-run_analysis(file.path("analysis",bname,ename,"edger-tcdd.csv"),coef=3)
-run_analysis(file.path("analysis",bname,ename,"edger-tcdd+indole.csv"),coef=4)
+#run_analysis(file.path("analysis",bname,ename,"edger-all.csv"),coef=2:dim(design)[2]) 
+meta_run(2)
+#meta_run(3)
+#meta_run(4)
 
 #run_analysis(file.path("analysis",bname,ename,"edger-Lignans.csv"),coef=dim(design)[2]-2) 
 #run_analysis(file.path("analysis",bname,ename,"edger-Stromal.csv"),coef=dim(design)[2]-1)
 #run_analysis(file.path("analysis",bname,ename,"edger-Sigmoid.csv"),coef=dim(design)[2])
 
 ## output MA, MDS, etc.., plots
-png(file.path("analysis",bname,ename,"edger-mds.png"))
-p = plotMDS(y)
-dev.off()
+#png(file.path("analysis",bname,ename,"edger-mds.png"))
+#p = plotMDS(y)
+#dev.off()
 
 png(file.path("analysis",bname,ename,"edger-bcv.png"))
 p = plotBCV(y)

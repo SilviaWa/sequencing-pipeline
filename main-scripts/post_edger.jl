@@ -53,8 +53,8 @@ function filt_ncrna(epath)
     end
 end
 
-if length(ARGS)==1 && isfile(ARGS[1])
-    bname = basename(directory)
-    epath = joinpath("analysis",bname,"edger")
+if length(ARGS)==1 && isdir(ARGS[1])
+    #bname = basename(ARGS[1])
+    #epath = joinpath("analysis",bname,"edger")
     make_plots(ARGS[1])
 end
