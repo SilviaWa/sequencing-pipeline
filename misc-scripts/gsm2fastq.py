@@ -17,9 +17,7 @@ def read_csv():
 
 	else:
 		subprocess.call("mkdir %s" % gse+"/"+gsm, shell=True)
-		cmd = "edirect/esearch -db sra -query " + gsm + "| edirect/efetc
-h --format runinfo | cut -d ',' -f 1 | grep SRR |  xargs sratools/bin/fastq-dump
- --bzip2 -O "+ gse+"/"+gsm
+		cmd = "edirect/esearch -db sra -query " + gsm + "| edirect/efetch --format runinfo | cut -d ',' -f 1 | grep SRR |  xargs sratools/bin/fastq-dump --split-files --bzip2 -O "+ gse+"/"+gsm
 		subprocess.call(cmd, shell=True)
 		print(gsm+":")
 
