@@ -57,14 +57,47 @@ key = read.csv(args[2], header=TRUE, row.names=1)
 #groups = factor(paste(factors$treatment,factors$tissue,sep='.'))
 #groups = factor(paste(factors$treatment,factors$location,sep='.'))
 #########################
+#sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
+#counts = counts[!sel,]
+#ename = "edger-2x2-trtadd"
+#factors = key[order(rownames(key)), c("treatment","tissue")]
+#factors$treatment = relevel(factors$treatment, "placebo")
+#design = model.matrix(~treatment+tissue, data=factors)
+#groups = factors$treatment 
+#########################
+#########################
+#sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
+#counts = counts[!sel,]
+#ename = "edger-2x2x2-paired-means"
+#factors = key[order(rownames(key)), c("idnum", "location", "treatment","tissue")]
+#factors$idnum = factor(factors$idnum)
+#factors$treatment = relevel(factors$treatment, "placebo")
+#design = model.matrix(~idnum+location+treatment+tissue, data=factors)
+##groups = factors$tissue
+#groups = factor(paste(key$tissue,key$location,sep='.'))
+#########################
+#########################
 sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
 counts = counts[!sel,]
-ename = "edger-2x2-trtadd"
-factors = key[order(rownames(key)), c("treatment","tissue")]
-factors$treatment = relevel(factors$treatment, "placebo")
-design = model.matrix(~treatment+tissue, data=factors)
-groups = factors$treatment 
+ename = "edger-2x2-gender"
+factors = key[order(rownames(key)), c("gender", "tissue")]
+# factors$idnum = factor(factors$idnum)
+#factors$treatment = relevel(factors$treatment, "placebo")
+design = model.matrix(~gender+tissue, data=factors)
+#groups = factors$tissue
+groups = factor(paste(key$tissue,key$gender,sep='.'))
 #########################
+#########################
+# Lampe Biopsy main
+# sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
+# counts = counts[!sel,]
+# ename = "edger-2x2-paired-cross"
+# factors = key[order(rownames(key)), c("idnum", "location", "tissue")]
+# factors$idnum = factor(factors$idnum)
+# #factors$treatment = relevel(factors$treatment, "placebo")
+# design = model.matrix(~idnum+location*tissue, data=factors)
+# #groups = factors$tissue
+# groups = factor(paste(key$tissue,key$location,sep='.'))
 #########################
 #sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
 #counts = counts[!sel,]
@@ -142,13 +175,13 @@ run_analysis = function(outfile, contrast=NULL, coef=NULL) {
   
   if (!is.null(lrt$table$logFC)){
     detags = rownames(ot1)[ot1$FDR < 0.05]
-    png(paste(outfile,".png"))
+    png(paste(outfile,".png",sep=""))
     plotSmear(lrt, de.tags=detags)
     abline(h=c(-2,2),col="blue")
     dev.off()
   }
   #print(cpm(y)[detags,])
-  #print(summary(decideTestsDGE(lrt, p=0.05, adjust="BH")))
+  print(summary(decideTestsDGE(lrt, p=0.05, adjust="BH")))
   #print(summary(decideTestsDGE(lrt, p=0.05, adjust="none")))
 }
 
@@ -176,13 +209,14 @@ system(paste("mkdir -p ",file.path("analysis",bname,ename)))
 meta_run = function(coef) {run_analysis(file.path("analysis",bname,ename,paste("edger-",colnames(design)[coef],".csv",sep="")),coef=coef)}
 
 #run_analysis(file.path("analysis",bname,ename,"edger-all.csv"),coef=2:dim(design)[2]) 
-meta_run(2)
+#meta_run(2)
 #meta_run(3)
 #meta_run(4)
 
-#run_analysis(file.path("analysis",bname,ename,"edger-Lignans.csv"),coef=dim(design)[2]-2) 
-#run_analysis(file.path("analysis",bname,ename,"edger-Stromal.csv"),coef=dim(design)[2]-1)
-#run_analysis(file.path("analysis",bname,ename,"edger-Sigmoid.csv"),coef=dim(design)[2])
+#run_analysis(file.path("analysis",bname,ename,"edger-Lignans.csv"),coef=dim(design)[2]-1) 
+run_analysis(file.path("analysis",bname,ename,"edger-Stromal.csv"),coef=dim(design)[2]-1)
+run_analysis(file.path("analysis",bname,ename,"edger-Sigmoid.csv"),coef=dim(design)[2]-2)
+run_analysis(file.path("analysis",bname,ename,"sig-strom-cross.csv"),coef=dim(design)[2])
 
 ## output MA, MDS, etc.., plots
 #png(file.path("analysis",bname,ename,"edger-mds.png"))
