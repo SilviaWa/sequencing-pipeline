@@ -1,4 +1,5 @@
 lists/*
+keys/*
 analysis/*
 map-results
 *.pyc
