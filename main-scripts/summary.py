@@ -58,21 +58,23 @@ summary_df = summary_df.dropna(axis=1, how='all')
 if key.empty:
     tab = summary_df
 else:
-    tab = pa.merge(key,summary_df, left_index=True, right_index=True)
-tab.to_csv('analysis/{}/{}-summary.csv'.format(batchname, batchname), index_label="sample_id")
+    tab = pa.merge(key, summary_df, left_index=True, right_index=True)
+tab.to_csv('analysis/{}/{}-summary.csv'.format(batchname, batchname),
+           index_label="sample_id")
+
 
 def get_data(batchroot, species, data_name, index_col=0, sep='\t', gen_df=None):
     datafiles = collect(batchroot, data_name, species)
-    if gen_df == None:
-        datalist = [pa.read_csv(fname, index_col=index_col, sep=sep, header=None) 
-                for sampleid, fname in datafiles.iteritems()]
+    if gen_df is None:
+        datalist = [pa.read_csv(fname, index_col=index_col, sep=sep, header=None)
+                    for sampleid, fname in datafiles.iteritems()]
     else:
         datalist = [gen_df(fname) for sampleid, fname in datafiles.iteritems()]
     for tab in datalist:
         tab['index'] = tab.index
         tab.drop_duplicates(subset='index', inplace=True)
         del tab['index']
-    data = pa.concat(datalist,axis=1, ignore_index=True)
+    data = pa.concat(datalist, axis=1, ignore_index=True)
     data.columns = datafiles.keys()
     return data.transpose()
 
