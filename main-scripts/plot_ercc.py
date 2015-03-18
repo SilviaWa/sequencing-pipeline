@@ -1,64 +1,61 @@
-import os,sys
-from collections import Counter
-
-USAGE_STRING = """Usage: 
-python plot_ercc.py <data_dir> 
-    <data_dir> - Location where counts file is contained 
-                 (which is produced by map.sh).
-
-This will create a plot called plot.png in the data_dir folder.
-"""
-
-if len(sys.argv) != 2:
-    print(USAGE_STRING)
-    sys.exit()
-
-os.chdir(sys.argv[1])
-cwd = os.path.abspath('.')
-outname = os.path.basename(cwd)
-
-true = {}
-for line in open('/mnt/datab/refs/igenomes/ercc/cms_095046.txt'):
-    if not line.startswith('Re-so'):
-        temp = line.split()
-        true[temp[1]] = float(temp[3])
-
-print(os.path.abspath('.'))
-counts = {}
-for line in open('ercc.counts'):
-    temp = line.split()
-    counts[temp[1]] = float(temp[0])
+import os
+import sys
+import pandas as pa
 
 import matplotlib as mpl
 mpl.use('Agg')
 import pylab as p
 
-vector_true = []
-vector_count = []
-for key in counts.keys():
-    vector_true.append(true[key])
-    vector_count.append(counts[key])
+from collections import Counter
 
-missed = []
-for key in true.keys():
-    if key not in counts:
-        missed.append(true[key])
-counter = Counter(missed)
+USAGE_STRING = """Usage:
+python plot_ercc.py <data_loc>
+    <data_loc> - Location where counts HDF5 file is contained
+                 (which is produced by summary.py).
 
-p.loglog(vector_true, vector_count, 'k.', markersize=10)
-flag = True
-for conc, num in counter.iteritems():
-    if flag:
-        p.loglog([conc, conc], [10**(num-1),0.1], 'r', linewidth=2, label='Missed Transcript')
-        flag = False
-    else:
-        p.loglog([conc, conc], [10**(num-1),0.1], 'r', linewidth=2)
+This will create plots called <sample>.png in the ercc folder.
+"""
 
-p.legend(loc='lower right')
-p.xlabel('True concentration before dilution (attomoles/uL)')
-p.ylabel('Observed counts')
-p.title(cwd)
-p.grid(True)
+if len(sys.argv) != 2:
+    print(USAGE_STRING)
+    sys.exit(-1)
 
-p.savefig('plot.png')
-p.savefig('plot.pdf')
+if not os.path.exists(sys.argv[1]):
+    print("File " + sys.argv[1] + " not found")
+    print(USAGE_STRING)
+    sys.exit(-1)
+
+WORKDIR = os.path.join('analysis', os.path.basename(sys.argv[1]))
+OUTDIR = os.path.join(WORKDIR, 'ercc')
+DATALOC = os.path.join(WORKDIR, os.path.basename(sys.argv[1])+'.h5')
+
+try:
+    os.mkdir(OUTDIR)
+except:
+    pass
+
+true = {}
+for line in open('/mnt/datab/refs/ercc/cms_095046.txt'):
+    if not line.startswith('Re-so'):
+        temp = line.split()
+        true[temp[1]] = float(temp[3])
+
+trueconc = pa.Series(true).sort_index()
+counts = pa.HDFStore(DATALOC)['ercc'].T.sort_index()
+
+
+def makeplot(fname, ground, sample):
+    p.close('all')
+    p.loglog(ground, sample, 'k.', markersize=10)
+
+    p.legend(loc='lower right')
+    p.xlabel('True concentration before dilution (attomoles/uL)')
+    p.ylabel('Observed counts')
+    p.title(fname)  # check
+    p.grid(True)
+
+    p.savefig(os.path.join(OUTDIR, fname+'.png'))
+    # p.savefig(os.path.join(OUTDIR, fname+'.pdf'))
+
+for sample in counts:
+    makeplot(sample, trueconc, counts[sample].clip_lower(1e-2))
