@@ -22,13 +22,13 @@ exoncount = Dict{ASCIIString,Int}()
 
 print("0...")
 for (i,line) in enumerate(eachline(fid))
-    if beginswith(line, '#')
+    if startswith(line, '#')
         continue
     end
     #Update Overall gene_biotype
     name = match(r"gene_name \"([^\"]*)\"", line).captures[1]
     id = match(r"gene_id \"([\w\-\.]*)\"", line).captures[1]
-    if beginswith(id, "ERCC-0")
+    if startswith(id, "ERCC-0")
         biotype = "ERCC"
     else
         biotype = match(r"gene_biotype \"([\w\-\.]*)\"", line).captures[1]
@@ -46,7 +46,7 @@ for (i,line) in enumerate(eachline(fid))
 
     exoncount[id] = get(exoncount, id, 0)+1
 
-    if i % 10000 == 0
+    if i % 1000 == 0
         print("\r")
         print("$i...")
     end
