@@ -264,8 +264,13 @@ for experimentlist in "$@"; do
 
   done # over files sample-list
   mydate 
-  echo -n "Counting Reads using HTSeq-count ... "
+  echo -n "Counting reads using HTSeq-count ... "
   eval parallel --gnu -j15 main-scripts/htseq.sh {} $species $hostrefdir ::: $currouts
+  echo "Done."
+
+  mydate 
+  echo -n "Post processing ribosomal reads ... "
+  eval OMP_NUM_THREADS=1 julia misc-scripts/ribo.jl $species $hostrefdir $currouts
   echo "Done."
 done # over arguments
 

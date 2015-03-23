@@ -42,6 +42,7 @@ summary_list = [
     ,('{}-gene-reads'.format(species), get_count('{}.gene.count'.format(species)))
     ,('mito-reads'.format(species), get_count('mito.count'.format(species)))
     ,('ercc-reads'.format(species), get_count('ercc.count'.format(species)))
+    ,('rrna-reads'.format(species), get_count('rrna.count'.format(species)))
     ,('htseq-0-genes', get_count('htseq.0.count',species))
     ,('htseq-3-genes', get_count('htseq.3.count',species))
     ,('htseq-10-genes', get_count('htseq.10.count',species))

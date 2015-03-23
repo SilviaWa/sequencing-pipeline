@@ -10,10 +10,10 @@ currout=$1
 hostspecies=$2
 hostrefdir=$3
 
-if [[ ! -s $currout/star/$hostspecies/htseq.list.pris2 ]];
+if [[ ! -s $currout/star/$hostspecies/htseq.list.pris ]];
 then
   pushd $currout/star/$hostspecies
-  #htseq-count Aligned.filt.bam $hostrefdir/genes.gtf --stranded=no -f bam -i gene_name >! htseq.list.pris
+  htseq-count Aligned.filt.bam $hostrefdir/genes.gtf --stranded=no -f bam -i gene_name >! htseq.list.pris
   tail -5 htseq.list.pris >! htseq.log
   head -n -5 htseq.list.pris >! htseq.list
 
@@ -24,7 +24,6 @@ then
   # Mitochondrial
   grep -i "^MT-" htseq.list >! mito.list
   awk '{ sum+=$2 } END { print sum }' mito.list >! mito.count
-
   awk '{ sum+=$2 } END { print sum }' htseq.list >! $hostspecies.annotated.count
 
   # Filter out all MT and ERCC reads
