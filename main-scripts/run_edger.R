@@ -1,20 +1,36 @@
 library(edgeR)
 
+# From: http://stackoverflow.com/questions/1815606/rscript-determine-path-of-the-executing-script
+# So we can copy this script to where the analysis output is saved
+thisFile <- function() {
+        cmdArgs <- commandArgs(trailingOnly = FALSE)
+        needle <- "--file="
+        match <- grep(needle, cmdArgs)
+        if (length(match) > 0) {
+                # Rscript
+                return(normalizePath(sub(needle, "", cmdArgs[match])))
+        } else {
+                # 'source'd via R console
+                return(normalizePath(sys.frames()[[1]]$ofile))
+        }
+}
+
 #args = commandArgs(trailing=TRUE)
 #args = c("lists/organoid","keys/organoid.csv")
 args = c("lists/lampe-biopsy-ercc38","keys/lampe-biopsy-key.csv")
+# args = c("lists/suborganoid","keys/suborganoid.csv")
 #args = c("lists/lampe-biopsy-ercc38","keys/lampe-biopsy-key.csv","location,treatment")
 
 #if (length(args) != 3) {
   #stop("Need three arguments: <list file> <key file> <comparison headers in keyfile>")
 
-if (length(args) != 2) {
-  stop("Need three arguments: <list file> <key file>")
-} else if (!file.exists(args[1])) {
-  stop("Need valid experiment list file") 
-} else if (!file.exists(args[2])) {
-  stop("Need valid key file as second argument")
-}
+# if (length(args) != 2) {
+#   stop("Need three arguments: <list file> <key file>")
+# } else if (!file.exists(args[1])) {
+#   stop("Need valid experiment list file") 
+# } else if (!file.exists(args[2])) {
+#   stop("Need valid key file as second argument")
+# }
 
 # Get counts file from analysis/fname/fname.T.csv
 bname = basename(args[1]) 
@@ -77,15 +93,22 @@ key = read.csv(args[2], header=TRUE, row.names=1)
 #groups = factor(paste(key$tissue,key$location,sep='.'))
 #########################
 #########################
+# sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
+# counts = counts[!sel,]
+# ename = "edger-2x2-gender"
+# factors = key[order(rownames(key)), c("gender", "tissue")]
+# # factors$idnum = factor(factors$idnum)
+# #factors$treatment = relevel(factors$treatment, "placebo")
+# design = model.matrix(~gender+tissue, data=factors)
+# #groups = factors$tissue
+# groups = factor(paste(key$tissue,key$gender,sep='.'))
+#########################
+#########################
 sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
 counts = counts[!sel,]
-ename = "edger-2x2-gender"
-factors = key[order(rownames(key)), c("gender", "tissue")]
-# factors$idnum = factor(factors$idnum)
-#factors$treatment = relevel(factors$treatment, "placebo")
-design = model.matrix(~gender+tissue, data=factors)
-#groups = factors$tissue
-groups = factor(paste(key$tissue,key$gender,sep='.'))
+ename = "tcdd"
+factors = key[order(rownames(key)), "treatment"]
+groups = factors
 #########################
 #########################
 # Lampe Biopsy main
@@ -140,15 +163,26 @@ groups = factor(paste(key$tissue,key$gender,sep='.'))
 #############################################
 #############################################
 
+file.copy(thisFile(), file.path("analysis", bname, ename))
 counts = counts[,order(names(counts))]
 # Read into DGEList for edgeR
-y = DGEList(counts=counts)
+# y = DGEList(counts=counts)
 
-# run analysis
-y = estimateGLMCommonDisp(y, design)
-y = estimateGLMTrendedDisp(y, design)
-y = estimateGLMTagwiseDisp(y, design)
-fit = glmFit(y, design)
+########################
+# run Pairwise analysis ...
+########################
+y = DGEList(counts=counts, group=factors)
+y = calcNormFactors(y)
+y = estimateCommonDisp(y)
+y = estimateTagwiseDisp(y)
+
+########################
+# or run GLM analysis
+########################
+# y = estimateGLMCommonDisp(y, design)
+# y = estimateGLMTrendedDisp(y, design)
+# y = estimateGLMTagwiseDisp(y, design)
+# fit = glmFit(y, design)
 
 ## get counts for each group
 dfs = split.data.frame(t(counts), groups)
@@ -160,7 +194,11 @@ dfss = sapply(dfs, colMeans)
 
 #### Write results
 run_analysis = function(outfile, contrast=NULL, coef=NULL) {
-  lrt = glmLRT(fit, contrast=contrast, coef=coef) 
+  # Pairwise test
+    lrt = exactTest(y)
+  # GLM Test
+    # lrt = glmLRT(fit, contrast=contrast, coef=coef) 
+
   ot1 = topTags(lrt,n=nrow(counts),sort.by="PValue")$table
   #if (is.null(contrast)) {
     #sel = which(as.logical(contrast))
@@ -213,15 +251,18 @@ meta_run = function(coef) {run_analysis(file.path("analysis",bname,ename,paste("
 #meta_run(3)
 #meta_run(4)
 
+# Pairwise test
+run_analysis(file.path("analysis",bname,paste(ename,".csv",sep="")))
+
 #run_analysis(file.path("analysis",bname,ename,"edger-Lignans.csv"),coef=dim(design)[2]-1) 
-run_analysis(file.path("analysis",bname,ename,"edger-Stromal.csv"),coef=dim(design)[2]-1)
-run_analysis(file.path("analysis",bname,ename,"edger-Sigmoid.csv"),coef=dim(design)[2]-2)
-run_analysis(file.path("analysis",bname,ename,"sig-strom-cross.csv"),coef=dim(design)[2])
+# run_analysis(file.path("analysis",bname,ename,"edger-Stromal.csv"),coef=dim(design)[2]-1)
+# run_analysis(file.path("analysis",bname,ename,"edger-Sigmoid.csv"),coef=dim(design)[2]-2)
+# run_analysis(file.path("analysis",bname,ename,"sig-strom-cross.csv"),coef=dim(design)[2])
 
 ## output MA, MDS, etc.., plots
-#png(file.path("analysis",bname,ename,"edger-mds.png"))
-#p = plotMDS(y)
-#dev.off()
+png(file.path("analysis",bname,ename,"edger-mds.png"))
+p = plotMDS(y)
+dev.off()
 
 png(file.path("analysis",bname,ename,"edger-bcv.png"))
 p = plotBCV(y)
