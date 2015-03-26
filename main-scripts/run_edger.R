@@ -39,13 +39,12 @@ counts = counts[!sel,]
 ename = "edger-2x2-paired-cross"
 factors = key[order(rownames(key)), c("idnum", "location", "tissue")]
 factors$idnum = factor(factors$idnum)
-#factors$treatment = relevel(factors$treatment, "placebo")
+# factors$treatment = relevel(factors$treatment, "placebo")
 design = model.matrix(~idnum+location*tissue, data=factors)
 #groups = factors$tissue
 groups = factor(paste(key$tissue,key$location,sep='.'))
 #############################################
 
-file.copy(thisFile(), file.path("analysis", bname, ename))
 counts = counts[,order(names(counts))]
 
 ########################
@@ -59,6 +58,7 @@ counts = counts[,order(names(counts))]
 ########################
 # or run GLM analysis
 ########################
+y = DGEList(counts=counts)
 y = estimateGLMCommonDisp(y, design)
 y = estimateGLMTrendedDisp(y, design)
 y = estimateGLMTagwiseDisp(y, design)
@@ -104,12 +104,13 @@ run_analysis = function(outfile, contrast=NULL, coef=NULL) {
 }
 
 system(paste("mkdir -p ",file.path("analysis",bname,ename)))
+file.copy(thisFile(), file.path("analysis", bname, ename, "edger_script.R"))
 
-meta_run = function(coef) {run_analysis(file.path("analysis",bname,ename,paste("edger-",colnames(design)[coef],".csv",sep="")),coef=coef)}
+meta_run = function(coef) {run_analysis(file.path("analysis",bname,ename,paste(colnames(design)[coef],".csv",sep="")),coef=coef)}
 
-#meta_run(2)
-#meta_run(3)
-#meta_run(4)
+meta_run(dim(design)[2])
+meta_run(dim(design)[2]-1)
+meta_run(dim(design)[2]-2)
 
 # Pairwise test
 # run_analysis(file.path("analysis",bname,paste(ename,".csv",sep="")))
