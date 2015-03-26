@@ -65,8 +65,11 @@ y = estimateGLMTrendedDisp(y, design)
 y = estimateGLMTagwiseDisp(y, design)
 fit = glmFit(y, design)
 
-## get counts for each group for outputting to summary spreadsheet
-dfs = split.data.frame(t(counts), groups)
+## get normalized counts for each group for outputting to summary spreadsheet
+scaled.counts = data.frame(mapply(`*`, counts, y$samples$lib.size *
+                                  y$samples$norm.factors/mean(y$samples$lib.size)))
+rownames(scaled.counts) = rownames(counts)
+dfs = split.data.frame(t(scaled.counts), groups)
 dfss = sapply(dfs, colMeans)
 
 #group_names = levels(groups)
