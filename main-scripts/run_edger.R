@@ -15,22 +15,8 @@ thisFile <- function() {
         }
 }
 
-#args = commandArgs(trailing=TRUE)
 #args = c("lists/organoid","keys/organoid.csv")
 args = c("lists/lampe-biopsy-ercc38","keys/lampe-biopsy-key.csv")
-# args = c("lists/suborganoid","keys/suborganoid.csv")
-#args = c("lists/lampe-biopsy-ercc38","keys/lampe-biopsy-key.csv","location,treatment")
-
-#if (length(args) != 3) {
-  #stop("Need three arguments: <list file> <key file> <comparison headers in keyfile>")
-
-# if (length(args) != 2) {
-#   stop("Need three arguments: <list file> <key file>")
-# } else if (!file.exists(args[1])) {
-#   stop("Need valid experiment list file") 
-# } else if (!file.exists(args[2])) {
-#   stop("Need valid key file as second argument")
-# }
 
 # Get counts file from analysis/fname/fname.T.csv
 bname = basename(args[1]) 
@@ -45,146 +31,40 @@ counts = dat[keep,]
 key = read.csv(args[2], header=TRUE, row.names=1)
 
 #############################################
-#############################################
-#############################################
 ## Create model comparison matrix with sample key
 #############################################
-#factors = key[unlist(strsplit(args[3],","))]
-#############################################
-#factors = key[c("tissue","location","treatment")]
-#factors$treatment = relevel(factors$treatment, "placebo")
-#design = model.matrix(~0+treatment+tissue+location, data=factors)
-#############################################
-#sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
-#counts = counts[!sel,]
-#ename = "edger-filt"
-
-#factors = key[order(rownames(key)),,drop=F]
-#factors$treatment = relevel(factors$treatment, "DMSO")
-#design = model.matrix(~treatment, data=factors)
-#########################
-#sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
-#counts = counts[!sel,]
-#ename = "edger-2x2"
-#factors = key[order(rownames(key)), c("treatment","tissue","location")]
-#factors$treatment = relevel(factors$treatment, "placebo")
-#design = model.matrix(~treatment+tissue+location, data=factors)
-#design = model.matrix(~treatment*tissue, data=factors)
-#groups = factor(paste(factors$treatment,factors$tissue,sep='.'))
-#groups = factor(paste(factors$treatment,factors$location,sep='.'))
-#########################
-#sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
-#counts = counts[!sel,]
-#ename = "edger-2x2-trtadd"
-#factors = key[order(rownames(key)), c("treatment","tissue")]
-#factors$treatment = relevel(factors$treatment, "placebo")
-#design = model.matrix(~treatment+tissue, data=factors)
-#groups = factors$treatment 
-#########################
-#########################
-#sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
-#counts = counts[!sel,]
-#ename = "edger-2x2x2-paired-means"
-#factors = key[order(rownames(key)), c("idnum", "location", "treatment","tissue")]
-#factors$idnum = factor(factors$idnum)
-#factors$treatment = relevel(factors$treatment, "placebo")
-#design = model.matrix(~idnum+location+treatment+tissue, data=factors)
-##groups = factors$tissue
-#groups = factor(paste(key$tissue,key$location,sep='.'))
-#########################
-#########################
-# sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
-# counts = counts[!sel,]
-# ename = "edger-2x2-gender"
-# factors = key[order(rownames(key)), c("gender", "tissue")]
-# # factors$idnum = factor(factors$idnum)
-# #factors$treatment = relevel(factors$treatment, "placebo")
-# design = model.matrix(~gender+tissue, data=factors)
-# #groups = factors$tissue
-# groups = factor(paste(key$tissue,key$gender,sep='.'))
-#########################
-#########################
+# Lampe Biopsy main
 sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
 counts = counts[!sel,]
-ename = "tcdd"
-factors = key[order(rownames(key)), "treatment"]
-groups = factors
-#########################
-#########################
-# Lampe Biopsy main
-# sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
-# counts = counts[!sel,]
-# ename = "edger-2x2-paired-cross"
-# factors = key[order(rownames(key)), c("idnum", "location", "tissue")]
-# factors$idnum = factor(factors$idnum)
-# #factors$treatment = relevel(factors$treatment, "placebo")
-# design = model.matrix(~idnum+location*tissue, data=factors)
-# #groups = factors$tissue
-# groups = factor(paste(key$tissue,key$location,sep='.'))
-#########################
-#sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
-#counts = counts[!sel,]
-#ename = "edger-trt"
-#factors = key[order(rownames(key)), c("treatment")]
-#factors = relevel(factors, "placebo")
-#design = model.matrix(~factors)
-#groups = factor(factors)
-#########################
-#sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
-#counts = counts[!sel,order(names(counts))]
-#key = key[order(rownames(key)),]
-
-#sel = key$tissue == "Stromal"
-##sel = key$tissue == "Epithelial"
-#counts = counts[,sel]
-#key = key[sel,]
-
-#ename = "edger-stromal-only"
-#factors = key[order(rownames(key)), c("treatment")]
-#factors = relevel(factors, "placebo")
-#design = model.matrix(~factors)
-#groups = factor(factors)
-#########################
-#counts = counts[,key$kit == "RNALater"]
-#key = key[key$kit == "RNALater",]
-
-#ename = "edger-filt-later"
-
-#factors = key[order(rownames(key)), c("idnum","tissue","location","treatment")]
-#factors$idnum = factor(factors$idnum)
+ename = "edger-2x2-paired-cross"
+factors = key[order(rownames(key)), c("idnum", "location", "tissue")]
+factors$idnum = factor(factors$idnum)
 #factors$treatment = relevel(factors$treatment, "placebo")
-#design = model.matrix(~idnum+treatment+tissue+location, data=factors)
-#############################################
-#groups = factor(paste(key$tissue,key$location,key$treatment,sep='.'))
-#design = model.matrix(~0+groups)
-#colnames(design) = levels(groups)
-#############################################
-#############################################
-#############################################
+design = model.matrix(~idnum+location*tissue, data=factors)
+#groups = factors$tissue
+groups = factor(paste(key$tissue,key$location,sep='.'))
 #############################################
 
 file.copy(thisFile(), file.path("analysis", bname, ename))
 counts = counts[,order(names(counts))]
-# Read into DGEList for edgeR
-# y = DGEList(counts=counts)
 
 ########################
 # run Pairwise analysis ...
 ########################
-y = DGEList(counts=counts, group=factors)
-y = calcNormFactors(y)
-y = estimateCommonDisp(y)
-y = estimateTagwiseDisp(y)
+# y = DGEList(counts=counts, group=factors)
+# y = calcNormFactors(y)
+# y = estimateCommonDisp(y)
+# y = estimateTagwiseDisp(y)
 
 ########################
 # or run GLM analysis
 ########################
-# y = estimateGLMCommonDisp(y, design)
-# y = estimateGLMTrendedDisp(y, design)
-# y = estimateGLMTagwiseDisp(y, design)
-# fit = glmFit(y, design)
+y = estimateGLMCommonDisp(y, design)
+y = estimateGLMTrendedDisp(y, design)
+y = estimateGLMTagwiseDisp(y, design)
+fit = glmFit(y, design)
 
-## get counts for each group
+## get counts for each group for outputting to summary spreadsheet
 dfs = split.data.frame(t(counts), groups)
 dfss = sapply(dfs, colMeans)
 
@@ -195,9 +75,9 @@ dfss = sapply(dfs, colMeans)
 #### Write results
 run_analysis = function(outfile, contrast=NULL, coef=NULL) {
   # Pairwise test
-    lrt = exactTest(y)
+    # lrt = exactTest(y)
   # GLM Test
-    # lrt = glmLRT(fit, contrast=contrast, coef=coef) 
+    lrt = glmLRT(fit, contrast=contrast, coef=coef) 
 
   ot1 = topTags(lrt,n=nrow(counts),sort.by="PValue")$table
   #if (is.null(contrast)) {
@@ -225,39 +105,14 @@ run_analysis = function(outfile, contrast=NULL, coef=NULL) {
 
 system(paste("mkdir -p ",file.path("analysis",bname,ename)))
 
-## output P-value csvs
-#"treatmentplacebo:locationRectum"  "treatmentLignans:locationRectum" "treatmentplacebo:locationSigmoid" "treatmentLignans:locationSigmoid
-#run_analysis(file.path("analysis",bname,"edger-treatment-rectum.csv"), contrast=c(-1,1,0,0))
-#run_analysis(file.path("analysis",bname,"edger-treatment-sigmoid.csv"), contrast=c(0,0,-1,1))
-#run_analysis(file.path("analysis",bname,"edger-location-placebo.csv"), contrast=c(-1,0,1,0))
-#run_analysis(file.path("analysis",bname,"edger-location-lignan.csv"), contrast=c(0,-1,0,1))
-
-#mycons = makeContrasts(
-                #xRE=Epithelial.Rectum.Lignans-Epithelial.Rectum.placebo, 
-                #xSE=Epithelial.Sigmoid.Lignans-Epithelial.Sigmoid.placebo, 
-                #xRS=Stromal.Rectum.Lignans-Stromal.Rectum.placebo, 
-                #xSS=Stromal.Sigmoid.Lignans-Stromal.Sigmoid.placebo, 
-                #levels=design)
-##[1] "Epithelial.Rectum.Lignans"  "Epithelial.Rectum.placebo" 
-##[3] "Epithelial.Sigmoid.Lignans" "Epithelial.Sigmoid.placebo"
-##[5] "Stromal.Rectum.Lignans"     "Stromal.Rectum.placebo"    
-##[7] "Stromal.Sigmoid.Lignans"    "Stromal.Sigmoid.placebo"  
-#run_analysis(file.path("analysis",bname,"edger-treatment-rectum.csv"), 
-
 meta_run = function(coef) {run_analysis(file.path("analysis",bname,ename,paste("edger-",colnames(design)[coef],".csv",sep="")),coef=coef)}
 
-#run_analysis(file.path("analysis",bname,ename,"edger-all.csv"),coef=2:dim(design)[2]) 
 #meta_run(2)
 #meta_run(3)
 #meta_run(4)
 
 # Pairwise test
-run_analysis(file.path("analysis",bname,paste(ename,".csv",sep="")))
-
-#run_analysis(file.path("analysis",bname,ename,"edger-Lignans.csv"),coef=dim(design)[2]-1) 
-# run_analysis(file.path("analysis",bname,ename,"edger-Stromal.csv"),coef=dim(design)[2]-1)
-# run_analysis(file.path("analysis",bname,ename,"edger-Sigmoid.csv"),coef=dim(design)[2]-2)
-# run_analysis(file.path("analysis",bname,ename,"sig-strom-cross.csv"),coef=dim(design)[2])
+# run_analysis(file.path("analysis",bname,paste(ename,".csv",sep="")))
 
 ## output MA, MDS, etc.., plots
 png(file.path("analysis",bname,ename,"edger-mds.png"))
