@@ -268,10 +268,15 @@ for experimentlist in "$@"; do
   eval parallel --gnu -j15 main-scripts/htseq.sh {} $species $hostrefdir ::: $currouts
   echo "Done."
 
-  mydate 
-  echo -n "Post processing ribosomal reads ... "
-  eval OMP_NUM_THREADS=1 julia misc-scripts/ribo.jl $species $hostrefdir $currouts
-  echo "Done."
+  if [[ -e $HOME/.julia ]];
+  then
+    mydate 
+    echo -n "Post processing ribosomal reads ... "
+    eval OMP_NUM_THREADS=1 julia misc-scripts/ribo.jl $species $hostrefdir $currouts
+    echo "Done."
+  else
+    echo "WARNING: Skipping ribosomal reads processing because Julia is not setup on your system"
+  fi
 done # over arguments
 
 mydate
