@@ -36,7 +36,7 @@ key = read.csv(args[2], header=TRUE, row.names=1)
 # Lampe Biopsy main
 sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
 counts = counts[!sel,]
-ename = "edger-2x2-paired-cross"
+ename = "edger-2x2-paired-cross-norm"
 factors = key[order(rownames(key)), c("idnum", "location", "tissue")]
 factors$idnum = factor(factors$idnum)
 # factors$treatment = relevel(factors$treatment, "placebo")
@@ -59,6 +59,7 @@ counts = counts[,order(names(counts))]
 # or run GLM analysis
 ########################
 y = DGEList(counts=counts)
+y = calcNormFactors(y)
 y = estimateGLMCommonDisp(y, design)
 y = estimateGLMTrendedDisp(y, design)
 y = estimateGLMTagwiseDisp(y, design)
