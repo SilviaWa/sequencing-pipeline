@@ -35,15 +35,25 @@ key = read.csv(args[2], header=TRUE, row.names=1)
 #############################################
 # Lampe Biopsy main
 sel = grepl("MT-.*", rownames(counts)) + grepl("ERCC-.*", rownames(counts)) + grepl("mt-.*", rownames(counts))
+# We have to filter out 6123 because its not full rank
+# > summary(factor(sapply(names(counts), function(x) substr(x,2,5))))      
+# 6102 6103 6105 6106 6108 6110 6121 6122 6123 6127 
+#    8    8    8    8    8    8    8    8    6    8 
 counts = counts[!sel,]
-ename = "edger-2x2-paired-cross-norm"
-factors = key[order(rownames(key)), c("idnum", "location", "tissue")]
+# counts = counts[!sel,!grepl("6123", names(counts))]
+# key = key[!grepl("6123", rownames(key)),]
+ename = "edger-2x2xgender-paired"
+factors = key[order(rownames(key)), c("idnum", "location", "tissue",
+                                      "gender")]
 factors$idnum = factor(factors$idnum)
 # factors$treatment = relevel(factors$treatment, "placebo")
-design = model.matrix(~idnum+location*tissue, data=factors)
+design = model.matrix(~idnum+gender+location+tissue, data=factors)
 #groups = factors$tissue
 groups = factor(paste(key$tissue,key$location,sep='.'))
 #############################################
+system(paste("mkdir -p ",file.path("analysis",bname,ename)))
+file.copy(thisFile(), file.path("analysis", bname, ename, "edger_script.R"))
+
 
 counts = counts[,order(names(counts))]
 
@@ -91,9 +101,8 @@ run_analysis = function(outfile, contrast=NULL, coef=NULL) {
     #ot1 = merge(ot1, dfss, by=0)
   #}
   ot1 = merge(ot1, dfss, by=0)
+  ot1 = ot1[order(ot1$FDR),] # Sort by ascending FDR
   write.csv(ot1,outfile,row.names=FALSE)
-  #detags = rownames(topTags(lrt,n=20))
-  print(outfile)
   
   if (!is.null(lrt$table$logFC)){
     detags = rownames(ot1)[ot1$FDR < 0.05]
@@ -102,19 +111,22 @@ run_analysis = function(outfile, contrast=NULL, coef=NULL) {
     abline(h=c(-2,2),col="blue")
     dev.off()
   }
-  #print(cpm(y)[detags,])
+  sink(file=file.path(dirname(outfile), "summary.txt"), append=TRUE)
+  print(outfile)
   print(summary(decideTestsDGE(lrt, p=0.05, adjust="BH")))
+  sink(NULL)
+
+  #print(cpm(y)[detags,])
   #print(summary(decideTestsDGE(lrt, p=0.05, adjust="none")))
 }
-
-system(paste("mkdir -p ",file.path("analysis",bname,ename)))
-file.copy(thisFile(), file.path("analysis", bname, ename, "edger_script.R"))
 
 meta_run = function(coef) {run_analysis(file.path("analysis",bname,ename,paste(colnames(design)[coef],".csv",sep="")),coef=coef)}
 
 meta_run(dim(design)[2])
 meta_run(dim(design)[2]-1)
 meta_run(dim(design)[2]-2)
+
+system(paste("cat",file.path("analysis",bname,ename,"summary.txt")))
 
 # Pairwise test
 # run_analysis(file.path("analysis",bname,paste(ename,".csv",sep="")))
