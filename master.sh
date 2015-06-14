@@ -1,6 +1,6 @@
 #!/bin/bash
 
-misc-scripts/concat.sh ../data/baby-stool-individuals-09202013/ ../data/processed
+main-scripts/concat.sh ../data/baby-stool-individuals-09202013/ ../data/processed
 echo "Concat done"
 
 main-scripts/map.sh lists/elist 2> err.log | tee out.log
