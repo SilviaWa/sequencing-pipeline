@@ -16,39 +16,64 @@ if [[ $# -lt 2 ]]; then
   exit -1
 fi
 
-IN=$1
-OUT=$2
+IN=$1   # Input directory with fastq.gz files each from a different sequencing lane
+OUT=$2  # Output directory for combined files
 
 #this will create our output directory, if it doesn't already exist.
 mkdir -p $2
 
-if [[ $(ls -A $2) ]]; then
+if [[ $(ls -A $2) ]]; then # If there are files in our output directory
     echo ""
-    echo "Oops, output folder $2 is nonempty"
-    exit -1
+    echo "Oops, output folder $2 is nonempty" # Print an error message
+    exit -1                                   # And exit with error code -1
 fi
 
 
-if [[ -z $3 ]]
+if [[ -z $3 ]]  # If there is no 3rd argument
 then
-    SAMPLES=$(for f in `find $IN -iname *fastq.gz `; do basename $f | cut -c 1-4; done | sort | uniq)
+    # Build up a samples list
+    SAMPLES=$(
+    # Look for any file in the IN dir ending in 'fastq.gz'
+    for f in `find $IN -iname *fastq.gz `;
+    do
+      # Strip the directory and suffix from the file
+      basename $f |
+      # Take the first 4 characters from the stripped name 
+      cut -c 1-4; 
+    done | 
+    # Sort the list alphabetically
+    sort | 
+    # Take only non-repeated names
+    uniq)
 else
+    # Otherwise use the sample_list.txt file to get the list of 
+    # samples on which to do the concatenation
     SAMPLES=`cat $3`
 fi
 
-for s in $SAMPLES;
+# Now that we have sample names
+for s in $SAMPLES;  # For each sample
 do
+    # Create a consolidated, single bz2 file in the OUT directory
     NEW=$OUT/$s.fastq.bz2
+    # If the file does not exist
     if [[ ! -s $NEW ]]; then
-	FILES=$(find $IN -iname "$s"*.gz)
-	echo "For sample $s, concatenating input files:"
-	for f in $FILES;
-	  do echo $f
-	done
-	echo "into new file: $NEW"
-	echo ""
-	#zcat $FILES | lbzip2 > $NEW
-	#echo "... Done."
+    	# Find all files beginning with the 
+      # sample name and ending in '.gz'
+      FILES=$(find $IN -iname "$s"*.gz)
+    	echo "For sample $s, concatenating input files:"
+    	# Display each sample name
+      for f in $FILES;
+    	  do echo $f
+    	done
+      # And where we'll be storing the concatenated version
+    	echo "into new file: $NEW"
+    	echo ""
+      # Do the actual concatenation by 
+      # converting all '.gz' files into a single '.bz2' file
+      # using as many CPU cores as possible
+    	#zcat $FILES | lbzip2 > $NEW
+    	echo "... Done."
     fi
 done
 
