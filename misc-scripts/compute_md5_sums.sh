@@ -1,9 +1,9 @@
 #!/usr/bin/zsh
 # Purpose: 	Computes md5sums of a list of files and compares them to given values
 # Expects: 	One argument:	
-# 					- Space delimited file, in the same directory as the untarred fastq files,
-# 						with the first column being a md5sum
-# 						and the second column being the file name, which has previously been summed
+#           - Space delimited file, in the same directory as the untarred fastq files,
+#           with the first column being a md5sum
+#           and the second column being the file name, which has previously been summed
 
 if (! [[ -e $1 ]]); then
 	print "File does not exist"
@@ -27,19 +27,24 @@ known_sums=($(cat $(basename $file) | cut -d' ' -f1))
 file_names=($(cat $(basename $file) | cut -d' ' -f3))
 
 print "Working ..."
+error=false
 # Once for every file do the following:
 for (( i = 1; i <= ${#file_names}; i++))
 do
-	# Compute the average sum from the file name, by taking the first column of the output
-	# of the md5sum command
-	computed_sum=$(md5sum $file_names[i] | cut -d' ' -f1)
-	# Check if the sum from the agrument file equals the computed sum, if not	
-	if [[ $known_sums[i] != $computed_sum ]]; then
-		print "Sum mismatch for file: \t" $file_names[i]
-	fi
+  # Compute the average sum from the file name, by taking the first column of the output
+  # of the md5sum command
+  computed_sum=$(md5sum $file_names[i] | cut -d' ' -f1)
+  # Check if the sum from the agrument file equals the computed sum, if not	
+  if [[ $known_sums[i] != $computed_sum ]]; then
+    print "Sum mismatch for file: \t" $file_names[i]
+    # Set an error flag 
+    error=true
+  fi
 done
 
-# If nothing was printed we successfully matched all the sums; Notify the user
-print "All sums matched!"
-# Successful, no error code
-return 0
+if ! $error; then
+  # If no error was encountered we successfully matched all the sums; Notify the user
+  print "All sums matched!"
+  # Successful, no error code
+  return 0
+fi
