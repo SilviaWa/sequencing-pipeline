@@ -4,6 +4,8 @@
 #           - Space delimited file, in the same directory as the untarred fastq files,
 #           with the first column being a md5sum
 #           and the second column being the file name, which has previously been summed
+# Error Codes: 1 - The input file does not exist
+#              2 - There was a sum mismatch between known and computed sums
 
 if (! [[ -e $1 ]]); then
 	print "File does not exist"
@@ -47,4 +49,7 @@ if ! $error; then
   print "All sums matched!"
   # Successful, no error code
   return 0
+else
+	# Unsucessful return error code to the calling program
+	return 2;
 fi
