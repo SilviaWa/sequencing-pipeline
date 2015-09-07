@@ -36,19 +36,20 @@ else
     SAMPLES=`cat $3`
 fi
 
+#Take out one trailing slash if it exists
+OUT=${OUT%/} 
 for s in $SAMPLES;
 do
-    NEW=$OUT/$s.fastq.bz2
-    if [[ ! -s $NEW ]]; then
-	FILES=$(find $IN -iname "$s"*.gz)
-	echo "For sample $s, concatenating input files:"
-	for f in $FILES;
-	  do echo $f
-	done
-	echo "into new file: $NEW"
-	echo ""
-	#zcat $FILES | lbzip2 > $NEW
-	#echo "... Done."
-    fi
+	NEW=$OUT/$s.fastq.bz2
+	if [[ ! -s $NEW ]]; then
+		FILES=$(find $IN -iname "$s"*.gz)
+		echo "For sample $s, concatenating input files:"
+		for f in $FILES;
+		  do echo $f
+		done
+		echo "into new file: $NEW"
+		echo ""
+		#zcat $FILES | lbzip2 > $NEW
+		#echo "... Done."
+	fi
 done
-
