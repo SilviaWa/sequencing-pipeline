@@ -66,12 +66,10 @@
 	)
 ```
 
-###Some key features:
+**Some key features:**
 
-- Species needs to be listed by the name of the files the sequences will be mapped to (with Ensembl we would use "mouse".  Oracle is grch38-human & grcm39-mouse currently).  Check the directory name.  The location will be listed in the `config.sh`.
-
-- The sample list needs to list all the files with a space at the end before the '\'.  The backlash allow the next line to be read as if a single space was there.  There cannot be a space after the '\'.
-
+- Species needs to be listed by the name of the files the sequences will be mapped to (with Ensembl we would use "mouse".  Oracle is `grch38-human` & `grcm39-mouse` currently).  Check the directory name.  The location will be listed in the `config.sh`.
+- The sample list needs to list all the files with a space at the end before the `\`.  The backlash allow the next line to be read as if a single space was there.  There cannot be a space after the `\`.
 - The list will be used with many of the following programs so having this correct will save a lot of time.
 
  
