@@ -1,9 +1,9 @@
 ***It is highly recommended that the list of sample names sent to the sequencing center contain names that have the same length as this length will be used to label the files.  This simplifies things later on.***
 
-**Using the pipeline to process sequencing data.**
+#Using the pipeline to process sequencing data.
 
 ----------
-**To Get Started**
+##To Get Started
 
 - All files should be on Github (files may need small amounts of editing for your particular sequences).
 
@@ -57,19 +57,14 @@
 1. Now a list needs to be made of all samples.  This can be facilitated by making a digital list of all the files in your sequencing folder that we placed on the Linux computer.  This can be started by using the following command:  `ls /folder-where-my-sequences-are/* > listname.txt`
 
 	You want to be in the sequencing-pipeline so that the list contains the correct map to the files.  Now you can open the list file in your favorite Linux writing program (Vim, Nano & others).  The key is to make a file that looks like the following:
-
-    `species="mm10"`
-	
-	`samplelist=(\`
-
-	`/mnt/data1/manasvi-stem-010113/255neg100ng_RNA_GATCAG_R1.fastq.gz \`
-
-	`/mnt/data1/manasvi-stem-010113/255neg10ng_RNA_CTTGTA_R1.fastq.gz \`
-
-	`/mnt/data1/manasvi-stem-010113/255neg10neg_RNA_GGCTAC_R1.fastq.gz \`
-
-	`)`
-
+```
+    species="mm10"
+	samplelist=(\
+	/mnt/data1/manasvi-stem-010113/255neg100ng_RNA_GATCAG_R1.fastq.gz \
+	/mnt/data1/manasvi-stem-010113/255neg10ng_RNA_CTTGTA_R1.fastq.gz \
+	/mnt/data1/manasvi-stem-010113/255neg10neg_RNA_GGCTAC_R1.fastq.gz \
+	)
+```
 	Some key features:
 	
 	Species needs to be listed by the name of the files the sequences will be mapped to (with Ensembl we would use "mouse".  Oracle is grch38-human & grcm39-mouse currently).  Check the directory name.  The location will be listed in the config.sh.
@@ -100,4 +95,3 @@ Links to Kumaran/Radi videos:
 [https://www.youtube.com/watch?v=kXnN28aSUMA](http://www.youtube.com/watch?v=kXnN28aSUMA)
 
 [https://www.youtube.com/watch?v=FtpHgvSFLIk](https://www.youtube.com/watch?v=FtpHgvSFLIk)
-	 
