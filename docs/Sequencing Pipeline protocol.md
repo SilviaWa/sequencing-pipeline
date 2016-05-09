@@ -15,18 +15,18 @@
 
 ----------
 
-1. Sequencing files should have been received on an external hard drive or downloaded from a server.  Place these files on the NAS in a folder that is descriptive but does not use spaces (Linux has issues).  Use '-' or '_' in the folder name.  Be sure to check the checksums if available (this is key to be sure there is no corruption of the files when copied).  To get files, be in the directory you want them placed then:
+1. Sequencing files should have been received on an external hard drive or downloaded from a server.  Place these files on the NAS in a folder that is descriptive but does not use spaces (Linux has issues).  Use `-` or `_` in the folder name.  Be sure to check the checksums if available (this is key to be sure there is no corruption of the files when copied).  To get files, be in the directory you want them placed then:
 	
 	`wget --user=Chapkin --pasword=pswrd location.of.files.downloading`
 
 	Use `md5sum filename` or `sum filename` depending on the type of checksum.  You may need to contact the sequencing core facility.
 
 
-1. Place a **copy** onto the computer that you plan to use for the analysis (oracle - /mnt/datab, sequencer - /mnt/data1).  The original should never be altered.  If the files are in a `.tar` archive, do not untar on the NAS.  Be sure to check that the files are copied okay using the md5sum or checksum.
+1. Place a **copy** onto the computer that you plan to use for the analysis (oracle - `/mnt/datab`, sequencer - `/mnt/data1`).  The original should never be altered.  If the files are in a `.tar` archive, do not untar on the NAS.  Be sure to check that the files are copied okay using the md5sum or checksum.
 
 	Use cp: `cp location.and.file.copying.from location.and.file.copying.to`
 
-1. You will need to be sure you have space on the computer hard drive.  Check for hard drive space, `df -h`  You will need space on data1/datab and your home directory.  Each `.bam` file produced will need about 1 GB of space.
+1. You will need to be sure you have space on the computer hard drive.  Check for hard drive space, `df -h`  You will need space on `data1/datab` and your `/home` directory.  Each `.bam` file produced will need about 1 GB of space.
 2. Once the files are on the computer for processing, untar them:
 	`tar -xvf file.tar`
 
