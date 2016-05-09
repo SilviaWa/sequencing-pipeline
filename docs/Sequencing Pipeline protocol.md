@@ -44,7 +44,7 @@
 	If you do not need to concatenate your files, you will need to convert the .gz to .bz2 as follows:
 	`gunzip -c < file.gz | bzip2 -c > file.bz2`
 	
-	The concat.sh program includes this step.
+	The `concat.sh` program includes this step.
 
 
 
@@ -65,13 +65,14 @@
 	/mnt/data1/manasvi-stem-010113/255neg10neg_RNA_GGCTAC_R1.fastq.gz \
 	)
 ```
-	Some key features:
-	
-	Species needs to be listed by the name of the files the sequences will be mapped to (with Ensembl we would use "mouse".  Oracle is grch38-human & grcm39-mouse currently).  Check the directory name.  The location will be listed in the config.sh.
 
-	The sample list needs to list all the files with a space at the end before the '\'.  The backlash allow the next line to be read as if a single space was there.  There cannot be a space after the '\'.
+###Some key features:
 
-	The list will be used with many of the following programs so having this correct will save a lot of time.
+- Species needs to be listed by the name of the files the sequences will be mapped to (with Ensembl we would use "mouse".  Oracle is grch38-human & grcm39-mouse currently).  Check the directory name.  The location will be listed in the `config.sh`.
+
+- The sample list needs to list all the files with a space at the end before the '\'.  The backlash allow the next line to be read as if a single space was there.  There cannot be a space after the '\'.
+
+- The list will be used with many of the following programs so having this correct will save a lot of time.
 
  
 1. Next, if the sequencing facility has not done so, you can run `preqc.sh` to check on the quality of the sequencing.  This program is usually run from the sequencing pipeline directory.  Below is an example:  `main-scripts/preqc.sh lists/FADS1`
