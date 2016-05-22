@@ -49,7 +49,7 @@ do
 		done
 		echo "into new file: $NEW"
 		echo ""
-		#zcat $FILES | lbzip2 > $NEW
+		zcat $FILES | lbzip2 > $NEW
 		#echo "... Done."
 	fi
 done
