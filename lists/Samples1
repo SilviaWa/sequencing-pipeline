@@ -1,0 +1,10 @@
+species=“grmc38”
+samplelist=(\
+/home/lijun/ConcatSample_DMSO1/DMSO.fastq.bz2 \
+/home/lijun/ConcatSample_DMSO2/DMSO.fastq.bz2 \
+/home/lijun/ConcatSample_DMSO3/DMSO.fastq.bz2 \
+/home/lijun/ConcatSample_TCDD1/TCDD.fastq.bz2 \
+/home/lijun/ConcatSample_TCDD2/TCDD.fastq.bz2 \
+/home/lijun/ConcatSample_TCDD3/TCDD.fastq.bz2 
+)
+
