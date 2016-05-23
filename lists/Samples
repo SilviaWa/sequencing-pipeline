@@ -1,4 +1,4 @@
-species="hg19"
+species=“mm10”
 samplelist=(\
 /home/lijun/ConcatSample_DMSO1/DMSO.fastq.bz2 \
 /home/lijun/ConcatSample_DMSO2/DMSO.fastq.bz2 \
