@@ -1,0 +1,7 @@
+species="hg19"
+samplelist=(\
+/home/lijun/ConcatSample_DMSO1/DMSO.fastq.bz2 \
+/home/lijun/ConcatSample_DMSO2/DMSO.fastq.bz2 \
+/home/lijun/ConcatSample_DMSO3/DMSO.fastq.bz2 
+)
+
