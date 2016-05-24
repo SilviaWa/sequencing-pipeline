@@ -1,4 +1,4 @@
-species=“grcm38-mouse”
+species=grcm38-mouse
 samplelist=(\
 /home/lijun/ConcatSample_DMSO1/DMSO.fastq.bz2 \
 /home/lijun/ConcatSample_DMSO2/DMSO.fastq.bz2 \
